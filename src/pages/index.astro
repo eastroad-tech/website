@@ -38,7 +38,7 @@ import Kicker from '../theme/components/Kicker.astro';
   footerCapabilities={[
     { label: 'Technology Advisory & Strategy', href: '/capabilities/technology-advisory-strategy' },
     { label: 'Architecture & System Design', href: '/capabilities/architecture-system-design' },
-    { label: 'Product Engineering', href: '/capabilities/product-engineering' },
+    { label: 'Software Engineering', href: '/capabilities/softwarae-engineering' },
     { label: 'AI Systems Engineering', href: '/capabilities/ai-systems-engineering' },
     { label: 'Commercial Analytics & Data Operations', href: '/capabilities/commercial-analytics-data-operations' },
   ]}
@@ -78,11 +78,12 @@ import Kicker from '../theme/components/Kicker.astro';
 
   <!--
     Decision Framework: text-only for now. A diagram can be dropped in as a
-    sibling of .df-body inside .decision-framework__grid later without
-    restructuring this section.
+    sibling of .df-body inside .two-col-grid later without restructuring this
+    section. .two-col-grid is the shared left/right column ratio also used by
+    the "How We Work" section below.
   -->
   <section class="decision-framework">
-    <div class="container-wide decision-framework__grid">
+    <div class="container-wide two-col-grid">
       <h2 class="df-heading">Start with the problem, not the technology.</h2>
       <div class="df-body">
         <p>
@@ -101,26 +102,28 @@ import Kicker from '../theme/components/Kicker.astro';
   </section>
 
   <section id="how-we-work" class="how-we-work">
-    <div class="container-wide">
-      <!-- Process-narrative context: verb form, not the "Strategy. Architecture. Engineering." branding form. -->
-      <h2>Strategise. Architect. Engineer.</h2>
-      <p class="how-we-work__subline">
-        The people who frame the decision remain accountable for the system it produces.
-      </p>
-      <div class="work-stages">
-        <div class="stages-line"></div>
+    <div class="container-wide two-col-grid">
+      <div class="work-heading">
+        <!-- Process-narrative context: verb form, not the "Strategy. Architecture. Engineering." branding form. -->
+        <h2>Strategise. Architect. Engineer.</h2>
+        <p class="how-we-work__subline">
+          The people who frame the decision remain accountable for the system it produces.
+        </p>
+      </div>
+      <div class="work-stages" data-work-stages>
+        <div class="stages-line" data-stages-line></div>
         <div class="work-stage">
           <span class="stage-node"></span>
           <div class="stage-content">
             <h3>Strategise</h3>
-            <p>How can technology transform your business? What software stack to build, why, and in what order.</p>
+            <p>What to build, why, and in what order.</p>
           </div>
         </div>
         <div class="work-stage">
           <span class="stage-node"></span>
           <div class="stage-content">
             <h3>Architect</h3>
-            <p>How the system should be designed before it's built.</p>
+            <p>How the system should be designed.</p>
           </div>
         </div>
         <div class="work-stage">
@@ -134,6 +137,32 @@ import Kicker from '../theme/components/Kicker.astro';
     </div>
   </section>
 
+  <script>
+    // The connecting line's endpoints are the true first/last .stage-node
+    // centers, measured at runtime rather than derived from column-width or
+    // gap math — stages are content-sized, so their widths vary with copy.
+    function positionStagesLine() {
+      const stages = document.querySelector<HTMLElement>('[data-work-stages]');
+      const line = stages?.querySelector<HTMLElement>('[data-stages-line]');
+      const nodes = stages?.querySelectorAll<HTMLElement>('.stage-node');
+      if (!stages || !line || !nodes || nodes.length < 2) return;
+      if (getComputedStyle(stages).flexDirection !== 'row') return;
+
+      const containerRect = stages.getBoundingClientRect();
+      const firstRect = nodes[0].getBoundingClientRect();
+      const lastRect = nodes[nodes.length - 1].getBoundingClientRect();
+      const firstCenter = firstRect.left + firstRect.width / 2 - containerRect.left;
+      const lastCenter = lastRect.left + lastRect.width / 2 - containerRect.left;
+
+      line.style.left = `${firstCenter}px`;
+      line.style.width = `${lastCenter - firstCenter}px`;
+    }
+
+    positionStagesLine();
+    document.fonts?.ready.then(positionStagesLine);
+    window.addEventListener('resize', positionStagesLine);
+  </script>
+
   <section class="capabilities">
     <div class="container-wide">
       <h2>Capabilities</h2>
@@ -141,7 +170,7 @@ import Kicker from '../theme/components/Kicker.astro';
         <li>
           <a class="capabilities__row" href="/capabilities/technology-advisory-strategy">
             <span class="capabilities__title">Technology Advisory &amp; Strategy</span>
-            <span class="capabilities__description">What to build, why, and in what order.</span>
+            <span class="capabilities__description">How can technology transform your business. What software stack to build, why, and in what order.</span>
           </a>
         </li>
         <li>
@@ -154,7 +183,7 @@ import Kicker from '../theme/components/Kicker.astro';
         </li>
         <li>
           <a class="capabilities__row" href="/capabilities/product-engineering">
-            <span class="capabilities__title">Product Engineering</span>
+            <span class="capabilities__title">Software Engineering</span>
             <span class="capabilities__description">
               From product design to a live, maintained system — the same team that designs it builds it.
             </span>
@@ -344,7 +373,9 @@ import Kicker from '../theme/components/Kicker.astro';
     font-size: var(--text-h2-section);
   }
 
-  .decision-framework__grid {
+  /* Shared left/right column ratio: Decision Framework and How We Work
+     both use it, so the widths stay in sync by construction. */
+  .two-col-grid {
     display: grid;
     grid-template-columns: minmax(280px, 320px) 1fr;
     gap: 64px;
@@ -379,19 +410,19 @@ import Kicker from '../theme/components/Kicker.astro';
     max-width: 60ch;
   }
 
+  /* Horizontal is the default (desktop) layout for the right column. Stages
+     are content-sized (flex: 0 0 auto), not equal thirds, so the connecting
+     line's endpoints are set in JS from the real node positions rather than
+     assumed from column math — see the inline script below. */
   .work-stages {
     display: flex;
-    gap: 40px;
-    margin-top: 40px;
+    gap: 48px;
     position: relative;
   }
 
-  /* right: pinned to the last (of 3 equal, 40px-gapped) column's own node center, not the container edge */
   .stages-line {
     position: absolute;
     top: 7px;
-    left: 7px;
-    right: calc((100% - 80px) / 3 - 7px);
     height: 1px;
     background: var(--blue);
     z-index: 0;
@@ -400,7 +431,7 @@ import Kicker from '../theme/components/Kicker.astro';
   .work-stage {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 0 0 auto;
     position: relative;
   }
 
@@ -423,6 +454,46 @@ import Kicker from '../theme/components/Kicker.astro';
     font-size: var(--text-support);
     line-height: var(--lh-support);
     color: var(--gray);
+  }
+
+  /* Below this width the right column is narrower than the row's natural
+     content width (~890px at gap: 48px), so the row overflows its column —
+     confirmed by measuring rendered widths from ~900px up to 1320px, where
+     .container-wide caps out and the right column finally has room. Switch
+     to the node-beside-heading layout with a vertical connector instead.
+     This also covers the 900px breakpoint below (which collapses the whole
+     two-column section to one column) since 900 < 1320. */
+  @media (max-width: 1320px) {
+    .work-stages {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .stages-line {
+      display: none;
+    }
+
+    .work-stage {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .stage-node {
+      margin-bottom: 0;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .work-stage:not(:last-child) .stage-node::after {
+      content: '';
+      position: absolute;
+      top: 13px;
+      left: 7px;
+      width: 1px;
+      height: calc(100% + 32px);
+      background: var(--blue);
+    }
   }
 
   .capabilities__list {
@@ -565,7 +636,7 @@ import Kicker from '../theme/components/Kicker.astro';
       font-size: 44px;
     }
 
-    .decision-framework__grid {
+    .two-col-grid {
       grid-template-columns: 1fr;
       gap: 16px;
     }
@@ -573,37 +644,6 @@ import Kicker from '../theme/components/Kicker.astro';
     .how-we-engage__grid {
       grid-template-columns: 1fr;
       gap: 32px;
-    }
-
-    .work-stages {
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .stages-line {
-      display: none;
-    }
-
-    .work-stage {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 20px;
-    }
-
-    .stage-node {
-      margin-bottom: 0;
-      margin-top: 6px;
-      flex-shrink: 0;
-    }
-
-    .work-stage:not(:last-child) .stage-node::after {
-      content: '';
-      position: absolute;
-      top: 13px;
-      left: 7px;
-      width: 1px;
-      height: calc(100% + 32px);
-      background: var(--blue);
     }
 
     .capabilities__row {

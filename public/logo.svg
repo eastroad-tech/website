@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="496.4" height="160" viewBox="0 0 496.4 160">
+<svg xmlns="http://www.w3.org/2000/svg" width="520.4" height="160" viewBox="0 0 520.4 160">
 <g transform="translate(20,59) scale(0.14) translate(-20,-190)">
 <polygon points="190,190 250,190 160,490 20,490" fill="#141414"></polygon>
 <polygon points="270,190 330,190 370,490 230,490" fill="#6f9ed1"></polygon>
 <polygon points="350,190 410,190 580,490 440,490" fill="#141414"></polygon>
 </g>
-<line x1="114.4" y1="20" x2="114.4" y2="140" stroke="#c9c5bd" stroke-width="2"></line>
-<g transform="translate(130.4,98.36)" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="700" font-size="54" fill="#141414"><text x="0" y="0">E</text>
+<line x1="126.4" y1="20" x2="126.4" y2="140" stroke="#c9c5bd" stroke-width="2"></line>
+<g transform="translate(154.4,98.36)" font-family="&#39;IBM Plex Sans&#39;, sans-serif" font-weight="700" font-size="54" fill="#141414"><text x="0" y="0">E</text>
 <text x="44" y="0">A</text>
 <text x="88" y="0">S</text>
 <text x="132" y="0">T</text>
