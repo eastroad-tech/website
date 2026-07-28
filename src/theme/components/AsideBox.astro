@@ -1,0 +1,42 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<aside class="aside-box">
+  <p class="aside-box__title">{title}</p>
+  <div class="aside-box__body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .aside-box {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .aside-box__title {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 12px;
+  }
+
+  .aside-box__body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .aside-box__body :global(p + p) {
+    margin-top: 12px;
+  }
+</style>

@@ -1,0 +1,312 @@
+---
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+
+interface TocEntry {
+  label: string;
+  page?: string;
+}
+
+interface Props {
+  title: string;
+  coverTitle: string;
+  coverSubtitle: string;
+  coverMeta: string;
+  tocEntries: TocEntry[];
+}
+
+const { title, coverTitle, coverSubtitle, coverMeta, tocEntries } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    {/* on-screen preview banner — @media screen only, has zero effect on actual print/PDF output */}
+    <p class="preview-banner">Print preview — page geometry below is approximate. Verify against the chosen PDF renderer.</p>
+
+    <section class="cover-page">
+      <p class="cover-page__eyebrow">Eastroad</p>
+      <h1 class="cover-page__title">{coverTitle}</h1>
+      <p class="cover-page__subtitle">{coverSubtitle}</p>
+      <p class="cover-page__meta">{coverMeta}</p>
+    </section>
+
+    <section class="toc-page">
+      <h2 class="toc-page__title">Contents</h2>
+      <ol class="toc-page__list">
+        {
+          tocEntries.map((entry) => (
+            <li>
+              <span class="toc-page__label">{entry.label}</span>
+              {entry.page && <span class="toc-page__dots" />}
+              {entry.page && <span class="toc-page__page">{entry.page}</span>}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <main class="doc-body">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /*
+   * @page running headers/footers (@top-left, @top-right, @bottom-center)
+   * are part of the CSS Paged Media spec, honored by tools like Prince and
+   * WeasyPrint. Plain Puppeteer/Chromium-based rendering does NOT honor
+   * page-margin boxes at all — verify against whichever PDF tool gets
+   * chosen later (astro-pdf/astroprint are explicitly out of scope here).
+   */
+  @page {
+    size: A4;
+    margin: 25mm 20mm;
+
+    @top-left {
+      content: 'Eastroad';
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8pt;
+      color: #686868;
+    }
+
+    @top-right {
+      content: string(doc-title);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8pt;
+      color: #686868;
+    }
+
+    @bottom-center {
+      content: counter(page);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 8pt;
+      color: #686868;
+    }
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  /* names the running doc-title used by @top-right above (Paged Media `string()`) */
+  .doc-body h1 {
+    string-set: doc-title content();
+  }
+
+  .preview-banner {
+    display: none;
+  }
+
+  .cover-page,
+  .toc-page {
+    break-after: page;
+  }
+
+  .cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 220mm;
+  }
+
+  .cover-page__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9pt;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .cover-page__title {
+    margin-top: 8mm;
+    font-size: 32pt;
+    line-height: 1.15;
+  }
+
+  .cover-page__subtitle {
+    margin-top: 6mm;
+    font-size: 13pt;
+    color: var(--gray);
+    max-width: 130mm;
+  }
+
+  .cover-page__meta {
+    margin-top: 20mm;
+    font-family: var(--font-mono);
+    font-size: 9pt;
+    color: var(--gray);
+  }
+
+  .toc-page__title {
+    font-size: 18pt;
+  }
+
+  .toc-page__list {
+    margin: 10mm 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4mm;
+  }
+
+  .toc-page__list li {
+    display: flex;
+    align-items: baseline;
+    font-size: 10pt;
+  }
+
+  .toc-page__label {
+    flex-shrink: 0;
+  }
+
+  .toc-page__dots {
+    flex: 1;
+    margin: 0 2mm;
+    border-bottom: 0.3pt dotted #686868;
+    height: 0;
+    transform: translateY(-2pt);
+  }
+
+  .toc-page__page {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    color: var(--gray);
+  }
+
+  .doc-body h1 {
+    font-size: 24pt;
+    line-height: 1.2;
+  }
+
+  .doc-body h2 {
+    font-size: 16pt;
+    line-height: 1.25;
+    margin-top: 10mm;
+    margin-bottom: 4mm;
+  }
+
+  .doc-body h3 {
+    font-size: 13pt;
+    margin-top: 8mm;
+    margin-bottom: 3mm;
+  }
+
+  .doc-body h4 {
+    font-size: 11pt;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    margin-top: 6mm;
+    margin-bottom: 2mm;
+  }
+
+  .doc-body p {
+    margin-top: 4mm;
+  }
+
+  /* print-restyled AsideBox / Exhibit — reuse the class names those
+     components render so slotted markup picks up print units for free */
+  .doc-body .aside-box,
+  .doc-body .exhibit {
+    border: 0.5pt solid #e2e1de;
+    background: #efeeea;
+    border-radius: 1mm;
+    padding: 5mm;
+    break-inside: avoid;
+    margin-top: 6mm;
+  }
+
+  .doc-body .aside-box__title,
+  .doc-body .exhibit__label {
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 3mm;
+  }
+
+  .doc-body .exhibit__source {
+    margin-top: 4mm;
+    font-size: 7.5pt;
+    color: var(--gray);
+  }
+
+  .doc-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    break-inside: avoid;
+    margin-top: 6mm;
+  }
+
+  .doc-body th,
+  .doc-body td {
+    border: 0.5pt solid #e2e1de;
+    padding: 2mm 3mm;
+    text-align: left;
+  }
+
+  .doc-body th {
+    font-family: var(--font-mono);
+    font-size: 7.5pt;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  @media screen {
+    /* on-screen preview chrome only — has no effect on actual print/PDF output */
+    .preview-banner {
+      display: block;
+      background: #efeeea;
+      border-bottom: 0.5pt solid #e2e1de;
+      color: #686868;
+      font-family: var(--font-mono);
+      font-size: 8pt;
+      text-align: center;
+      padding: 3mm 0;
+    }
+
+    body {
+      background: #d9d8d5;
+    }
+
+    .cover-page,
+    .toc-page,
+    .doc-body {
+      max-width: 210mm;
+      margin: 8mm auto;
+      padding: 25mm 20mm;
+      background: #ffffff;
+      box-shadow: 0 0.5mm 3mm rgba(20, 20, 20, 0.15);
+    }
+  }
+</style>

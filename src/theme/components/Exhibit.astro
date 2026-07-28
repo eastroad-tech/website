@@ -1,0 +1,44 @@
+---
+interface Props {
+  label: string;
+  source?: string;
+}
+
+const { label, source } = Astro.props;
+---
+
+<figure class="exhibit">
+  <p class="exhibit__label">{label}</p>
+  <div class="exhibit__body">
+    <slot />
+  </div>
+  {source && <figcaption class="exhibit__source">Source: {source}</figcaption>}
+</figure>
+
+<style>
+  .exhibit {
+    margin: 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .exhibit__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 16px;
+  }
+
+  .exhibit__body {
+    width: 100%;
+  }
+
+  .exhibit__source {
+    margin-top: 16px;
+    font-size: var(--text-micro);
+    color: var(--gray);
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+interface Props {
+  sections: { id: string; label: string }[];
+}
+
+const { sections } = Astro.props;
+---
+
+<nav class="toc-rail" aria-label="Table of contents" data-toc-rail>
+  <p class="toc-rail__title">In this piece</p>
+  <ul>
+    {
+      sections.map((section) => (
+        <li>
+          <a href={`#${section.id}`} data-toc-link={section.id}>
+            {section.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .toc-rail {
+    position: sticky;
+    top: 32px;
+    align-self: start;
+  }
+
+  .toc-rail__title {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 0 0 16px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 1px solid var(--rule);
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    padding: 4px 0 4px 16px;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    font-size: 14px;
+    color: var(--gray);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--ink);
+  }
+
+  a.active {
+    color: var(--blue);
+    border-left-color: var(--blue);
+  }
+
+  @media (max-width: 1000px) {
+    .toc-rail {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const rail = document.querySelector('[data-toc-rail]');
+  if (rail) {
+    const links = new Map(
+      Array.from(rail.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')).map((link) => [
+        link.getAttribute('data-toc-link'),
+        link,
+      ])
+    );
+
+    const sections = Array.from(links.keys())
+      .map((id) => (id ? document.getElementById(id) : null))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setActive = (id: string) => {
+      for (const [linkId, link] of links) {
+        link.classList.toggle('active', linkId === id);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      { rootMargin: '-15% 0px -70% 0px', threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>

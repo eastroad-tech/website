@@ -1,0 +1,56 @@
+---
+interface Props {
+  label: string;
+  tags?: string[];
+}
+
+const { label, tags = [] } = Astro.props;
+---
+
+<div class="kicker">
+  <span class="kicker__label">{label}</span>
+  {
+    tags.length > 0 && (
+      <span class="kicker__tags">
+        {tags.map((tag) => (
+          <span class="kicker__tag">{tag}</span>
+        ))}
+      </span>
+    )
+  }
+</div>
+
+<style>
+  .kicker {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .kicker__label {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--text-kicker);
+    letter-spacing: var(--ls-kicker);
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .kicker__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .kicker__tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--gray);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 3px 9px;
+  }
+</style>

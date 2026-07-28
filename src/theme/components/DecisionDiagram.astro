@@ -1,0 +1,76 @@
+---
+interface Props {}
+---
+
+{/* PLACEHOLDER — homepage diagram scheduled for redesign */}
+<div class="decision-diagram">
+  <svg viewBox="0 0 800 200" role="img" aria-label="A road splitting into two parallel paths and rejoining, representing two routes to the same decision.">
+    <!-- shared approach -->
+    <path d="M40,100 L300,100" class="road road--shared" />
+    <!-- two lanes -->
+    <path d="M300,100 C360,100 360,40 420,40 C480,40 480,100 500,100" class="road road--lane" />
+    <path d="M300,100 C360,100 360,160 420,160 C480,160 480,100 500,100" class="road road--lane" />
+    <!-- shared exit -->
+    <path d="M500,100 L760,100" class="road road--shared" />
+
+    <circle cx="300" cy="100" r="4" class="node" />
+    <circle cx="500" cy="100" r="4" class="node" />
+
+    <g class="diagram__lights">
+      <circle r="5" class="light">
+        <animateMotion
+          dur="4s"
+          repeatCount="indefinite"
+          path="M40,100 L300,100 C360,100 360,40 420,40 C480,40 480,100 500,100 L760,100"
+        />
+      </circle>
+      <circle r="5" class="light">
+        <animateMotion
+          dur="4s"
+          repeatCount="indefinite"
+          path="M40,100 L300,100 C360,100 360,160 420,160 C480,160 480,100 500,100 L760,100"
+        />
+      </circle>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .decision-diagram {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 48px 24px;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .road {
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .road--shared {
+    stroke: var(--blue);
+  }
+
+  .road--lane {
+    stroke: var(--ink);
+  }
+
+  .node {
+    fill: var(--blue);
+  }
+
+  .light {
+    fill: var(--blue);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .diagram__lights {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+}
+
+const { heading, body } = Astro.props;
+---
+
+<section class="closing-cta">
+  <div class="closing-cta__inner">
+    <h2>{heading}</h2>
+    <p>{body}</p>
+    <a class="btn" href="/contact">Start a conversation</a>
+  </div>
+</section>
+
+<style>
+  .closing-cta {
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+  }
+
+  .closing-cta__inner {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: var(--text-h2-section);
+    line-height: 1.2;
+  }
+
+  p {
+    margin-top: 16px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  .btn {
+    display: inline-flex;
+    margin-top: 32px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 13px 28px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background: var(--blue-dark);
+  }
+</style>

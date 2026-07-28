@@ -1,0 +1,116 @@
+---
+interface Props {
+  navItems: { label: string; href: string }[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const { navItems, ctaLabel, ctaHref } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="/">EASTROAD</a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav__list">
+        {
+          navItems.map((link) => (
+            <li>
+              <a class="nav__link" href={link.href}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="cta" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+  }
+
+  .site-header__inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .wordmark {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav {
+    flex: 1;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__link {
+    font-size: 15px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav__link:hover {
+    color: var(--blue);
+  }
+
+  .cta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--blue);
+    border-radius: var(--radius);
+    color: var(--blue);
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 9px 18px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .cta:hover {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  @media (max-width: 760px) {
+    .site-header__inner {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .nav {
+      order: 3;
+      flex-basis: 100%;
+    }
+
+    .nav__list {
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+  }
+</style>

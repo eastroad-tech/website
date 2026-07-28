@@ -1,0 +1,231 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Kicker from '../components/Kicker.astro';
+import AsideBox from '../components/AsideBox.astro';
+import RelatedList from '../components/RelatedList.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+interface Author {
+  name: string;
+  role: string;
+  bio: string;
+}
+
+interface RelatedItem {
+  title: string;
+  meta: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  kicker: string;
+  headline: string;
+  dek: string;
+  author: Author;
+  pageCount: number;
+  fileInfo: string;
+  downloadHref: string;
+  keyFindings: string[];
+  methodologyNote: string;
+  related: RelatedItem[];
+  closingCtaHeading: string;
+  closingCtaBody: string;
+}
+
+const {
+  title,
+  description,
+  kicker,
+  headline,
+  dek,
+  author,
+  pageCount,
+  fileInfo,
+  downloadHref,
+  keyFindings,
+  methodologyNote,
+  related,
+  closingCtaHeading,
+  closingCtaBody,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="header-grid">
+    <div class="header-content">
+      <Kicker label={kicker} />
+      <h1>{headline}</h1>
+      <p class="dek">{dek}</p>
+    </div>
+
+    <aside class="download-panel">
+      <div class="download-panel__cover">
+        <slot name="cover" />
+      </div>
+      <a class="download-panel__button" href={downloadHref}>Download whitepaper</a>
+      <p class="download-panel__info">{pageCount} pages &middot; {fileInfo}</p>
+    </aside>
+  </div>
+
+  <div class="content-grid">
+    <div class="content">
+      <AsideBox title="About the author">
+        <p>{author.name} — {author.role}</p>
+        <p>{author.bio}</p>
+      </AsideBox>
+
+      <section class="key-findings">
+        <h2>Key findings</h2>
+        <ol>
+          {
+            keyFindings.map((finding, index) => (
+              <li>
+                <span class="key-findings__index">{String(index + 1).padStart(2, '0')}</span>
+                <span>{finding}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <AsideBox title="Methodology">
+        <p>{methodologyNote}</p>
+      </AsideBox>
+
+      <div class="body">
+        <slot />
+      </div>
+    </div>
+  </div>
+
+  <RelatedList items={related} />
+  <ClosingCTA heading={closingCtaHeading} body={closingCtaBody} />
+</BaseLayout>
+
+<style>
+  .header-grid {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 72px 24px;
+    display: grid;
+    grid-template-columns: minmax(0, var(--container-narrow)) 280px;
+    gap: 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-content h1 {
+    margin-top: 16px;
+    font-size: var(--text-h1-article);
+    line-height: var(--lh-h1-article);
+  }
+
+  .dek {
+    margin-top: 20px;
+    font-size: var(--text-dek);
+    line-height: var(--lh-dek);
+    color: var(--gray);
+  }
+
+  .download-panel {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px;
+    height: fit-content;
+  }
+
+  .download-panel__cover {
+    aspect-ratio: 3 / 4;
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+  }
+
+  .download-panel__button {
+    display: block;
+    text-align: center;
+    background: var(--blue);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .download-panel__button:hover {
+    background: var(--blue-dark);
+  }
+
+  .download-panel__info {
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    color: var(--gray);
+    text-align: center;
+  }
+
+  .content-grid {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 56px 24px 0;
+  }
+
+  .content {
+    max-width: var(--container-narrow);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .key-findings h2 {
+    font-size: var(--text-h3);
+    margin-bottom: 16px;
+  }
+
+  .key-findings ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .key-findings li {
+    display: flex;
+    gap: 16px;
+    font-size: 16px;
+  }
+
+  .key-findings__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    color: var(--blue);
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+
+  .body {
+    font-size: var(--text-body);
+    line-height: var(--lh-body);
+  }
+
+  .body :global(h2) {
+    font-size: var(--text-h2-content);
+    line-height: var(--lh-h2-content);
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  .body :global(p + p) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 1000px) {
+    .header-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

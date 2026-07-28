@@ -1,0 +1,77 @@
+---
+interface Props {
+  sector: string;
+  engagementModel: string;
+  capabilitiesInvolved: string[];
+  duration: string;
+}
+
+const { sector, engagementModel, capabilitiesInvolved, duration } = Astro.props;
+
+const rows = [
+  { term: 'Sector', value: sector },
+  { term: 'Engagement model', value: engagementModel },
+  { term: 'Capabilities involved', value: capabilitiesInvolved.join(', ') },
+  { term: 'Duration', value: duration },
+];
+---
+
+<aside class="engagement-box">
+  <p class="engagement-box__title">Engagement</p>
+  <dl>
+    {
+      rows.map((row) => (
+        <div class="row">
+          <dt>{row.term}</dt>
+          <dd>{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</aside>
+
+<style>
+  .engagement-box {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .engagement-box__title {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 16px;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  .row {
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .row:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  dt {
+    font-size: var(--text-micro);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink);
+  }
+</style>

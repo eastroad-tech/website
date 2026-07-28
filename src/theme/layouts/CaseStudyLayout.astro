@@ -1,0 +1,182 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Kicker from '../components/Kicker.astro';
+import OutcomeStats from '../components/OutcomeStats.astro';
+import EngagementBox from '../components/EngagementBox.astro';
+import RelatedList from '../components/RelatedList.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+interface RelatedItem {
+  title: string;
+  meta: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  kicker: string;
+  confidentiality: 'anonymized' | 'named';
+  headline: string;
+  dek: string;
+  outcomeStats: { value: string; label: string }[];
+  sector: string;
+  engagementModel: string;
+  capabilitiesInvolved: string[];
+  duration: string;
+  related: RelatedItem[];
+  closingCtaHeading: string;
+  closingCtaBody: string;
+}
+
+const {
+  title,
+  description,
+  kicker,
+  confidentiality,
+  headline,
+  dek,
+  outcomeStats,
+  sector,
+  engagementModel,
+  capabilitiesInvolved,
+  duration,
+  related,
+  closingCtaHeading,
+  closingCtaBody,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="case-header">
+    <div class="case-header__inner">
+      <div class="case-header__eyebrow">
+        <Kicker label={kicker} />
+        <span class="confidentiality">{confidentiality}</span>
+      </div>
+      <h1>{headline}</h1>
+      <p class="dek">{dek}</p>
+    </div>
+  </header>
+
+  <div class="stats-wrap">
+    <OutcomeStats stats={outcomeStats} />
+  </div>
+
+  <div class="body-grid">
+    <div class="body">
+      <slot />
+    </div>
+
+    <EngagementBox
+      sector={sector}
+      engagementModel={engagementModel}
+      capabilitiesInvolved={capabilitiesInvolved}
+      duration={duration}
+    />
+  </div>
+
+  <div class="pull-quote-wrap">
+    <slot name="pull-quote" />
+  </div>
+
+  <RelatedList items={related} />
+  <ClosingCTA heading={closingCtaHeading} body={closingCtaBody} />
+</BaseLayout>
+
+<style>
+  .case-header {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .case-header__inner {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 72px 24px 48px;
+  }
+
+  .case-header__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .confidentiality {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--gray);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 3px 9px;
+  }
+
+  h1 {
+    margin-top: 20px;
+    font-size: var(--text-h1-case);
+    line-height: var(--lh-h1-case);
+  }
+
+  .dek {
+    margin-top: 20px;
+    font-size: var(--text-dek);
+    line-height: var(--lh-dek);
+    color: var(--gray);
+  }
+
+  .stats-wrap {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 48px 24px 0;
+  }
+
+  .body-grid {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 56px 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .body {
+    font-size: var(--text-body);
+    line-height: var(--lh-body);
+  }
+
+  .body :global(h2) {
+    font-size: var(--text-h2-content);
+    line-height: var(--lh-h2-content);
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+
+  .body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .body :global(p + p) {
+    margin-top: 20px;
+  }
+
+  .pull-quote-wrap:empty {
+    display: none;
+  }
+
+  .pull-quote-wrap {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 0 24px 56px;
+  }
+
+  .pull-quote-wrap :global(blockquote) {
+    margin: 0;
+    padding-left: 24px;
+    border-left: 3px solid var(--blue);
+    font-family: var(--font-serif);
+    font-size: var(--text-h3);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+</style>

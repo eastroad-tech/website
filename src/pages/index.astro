@@ -1,0 +1,451 @@
+---
+import BaseLayout from '../theme/layouts/BaseLayout.astro';
+import Kicker from '../theme/components/Kicker.astro';
+
+// The theme's HomeLayout and ClosingCTA (src/theme/) were inspected before
+// writing this page and don't fit this content as-is:
+//
+// - SiteHeader / SiteFooter (rendered by BaseLayout below) now take real
+//   props for nav items, CTA, and footer content — passed through from here
+//   via BaseLayout's navItems/ctaLabel/ctaHref/positioningLine/
+//   footerCapabilities/firmLinks/details/linkedinUrl/legalLine props.
+// - HomeLayout unconditionally renders <DecisionDiagram /> right after the
+//   hero and has no slot for an eyebrow, hero CTAs, a text-only Decision
+//   Framework section, or a "Best for" line on engagement models — so this
+//   page is built directly on BaseLayout with hand-rolled sections instead
+//   of HomeLayout. Deliberately not reworking HomeLayout to retroactively
+//   fit this one page — revisit it once a second page needs similar
+//   structure, so real reuse (not a guess from a single example) drives
+//   what it should look like.
+// - ClosingCTA hardcodes its button as "Start a conversation" -> /contact;
+//   this page's copy calls for "Discuss a decision" as the CTA everywhere,
+//   so the closing section below is hand-built rather than using that
+//   component.
+---
+
+<BaseLayout
+  title="Eastroad — Strategy, architecture, and engineering"
+  description="Eastroad helps organisations decide what they need from technology, then takes responsibility for the strategy, architecture, and engineering required to act."
+  navItems={[
+    { label: 'Capabilities', href: '/capabilities' },
+    { label: 'How we work', href: '/#how-we-work' },
+    { label: 'Research', href: '/research' },
+    { label: 'About', href: '/about' },
+  ]}
+  ctaLabel="Discuss a decision"
+  ctaHref="/#discuss"
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={[
+    { label: 'Technology Advisory & Strategy', href: '/capabilities/technology-advisory-strategy' },
+    { label: 'Architecture & System Design', href: '/capabilities/architecture-system-design' },
+    { label: 'Product Engineering', href: '/capabilities/product-engineering' },
+    { label: 'AI Systems Engineering', href: '/capabilities/ai-systems-engineering' },
+    { label: 'Commercial Analytics & Data Operations', href: '/capabilities/commercial-analytics-data-operations' },
+  ]}
+  firmLinks={[
+    { label: 'How We Work', href: '/#how-we-work' },
+    { label: 'Research', href: '/research' },
+    { label: 'About', href: '/about' },
+    { label: 'Discuss a decision', href: '/#discuss' },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <section class="hero">
+    <div class="container-wide">
+      <Kicker label="Strategy. Architecture. Engineering." />
+      <h1>What does your business need from technology?</h1>
+      <p class="hero__lede">
+        Eastroad helps organisations answer that question with rigor, then takes responsibility for
+        what follows: the strategy, architecture, and engineering required to act. One team, start to
+        finish — the people who frame the answer remain responsible for the system that gets built.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary" href="/contact">Discuss a decision</a>
+        <a class="btn btn--secondary" href="/how-we-work">Explore how we work</a>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    Decision Framework: text-only for now. A diagram can be dropped in as a
+    sibling of .decision-framework__body inside .container-narrow later
+    without restructuring this section.
+  -->
+  <section class="decision-framework">
+    <div class="container-narrow">
+      <div class="decision-framework__body">
+        <h2>Start with the problem, not the technology.</h2>
+        <p>
+          Every engagement begins with an assessment: what problem exists, what's genuinely at stake,
+          and what response it demands. AI is one possible answer to that question — not the default
+          one.
+        </p>
+        <p>
+          The assessment isn't a step before the engagement — it's the first part of it. What follows
+          is whatever the decision actually requires: a technology choice, the architecture behind it,
+          the engineering to build it. Same team, same rigor, whether or not technology turns out to be
+          the answer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-we-work" class="how-we-work">
+    <div class="container-wide">
+      <!-- Process-narrative context: verb form, not the "Strategy. Architecture. Engineering." branding form. -->
+      <h2>Strategise. Architect. Engineer.</h2>
+      <p class="how-we-work__subline">
+        The people who frame the decision remain accountable for the system it produces.
+      </p>
+      <div class="how-we-work__grid">
+        <div class="how-we-work__item">
+          <h3>Strategise</h3>
+          <p>What to build, why, and in what order.</p>
+        </div>
+        <div class="how-we-work__item">
+          <h3>Architect</h3>
+          <p>How the system should be designed before it's built.</p>
+        </div>
+        <div class="how-we-work__item">
+          <h3>Engineer</h3>
+          <p>A production system, not a proof of concept.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capabilities">
+    <div class="container-wide">
+      <h2>Capabilities</h2>
+      <ul class="capabilities__list">
+        <li>
+          <a class="capabilities__row" href="/capabilities/technology-advisory-strategy">
+            <span class="capabilities__title">Technology Advisory &amp; Strategy</span>
+            <span class="capabilities__description">What to build, why, and in what order.</span>
+          </a>
+        </li>
+        <li>
+          <a class="capabilities__row" href="/capabilities/architecture-system-design">
+            <span class="capabilities__title">Architecture &amp; System Design</span>
+            <span class="capabilities__description">
+              The structure, data, interfaces, and controls a system needs before it's built.
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="capabilities__row" href="/capabilities/product-engineering">
+            <span class="capabilities__title">Product Engineering</span>
+            <span class="capabilities__description">
+              From product design to a live, maintained system — the same team that designs it builds it.
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="capabilities__row" href="/capabilities/ai-systems-engineering">
+            <span class="capabilities__title">AI Systems Engineering</span>
+            <span class="capabilities__description">
+              Model evaluation, training data, retrieval, and the governance that keeps agents running in
+              production.
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="capabilities__row" href="/capabilities/commercial-analytics-data-operations">
+            <span class="capabilities__title">Commercial Analytics &amp; Data Operations</span>
+            <span class="capabilities__description">
+              Measurement, data quality, pricing, and the training-data infrastructure that supports both
+              of the above.
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="how-we-engage">
+    <div class="container-wide">
+      <h2>Start with the decision that matters.</h2>
+      <div class="how-we-engage__grid">
+        <div class="how-we-engage__item">
+          <h3>Diagnostic</h3>
+          <p>
+            A fixed-scope assessment for a high-consequence decision. You leave with a findings report,
+            a prioritized roadmap, and an honest estimate of what it takes to act.
+          </p>
+          <p class="how-we-engage__best-for">
+            <strong>Best for:</strong> AI investment decisions, architecture concerns, a stalled
+            programme.
+          </p>
+        </div>
+        <div class="how-we-engage__item">
+          <h3>Embedded Advisory</h3>
+          <p>
+            Senior technology and product judgment inside your team, without hiring a full executive.
+          </p>
+          <p class="how-we-engage__best-for">
+            <strong>Best for:</strong> firms that need experienced leadership without building it
+            in-house yet.
+          </p>
+        </div>
+        <div class="how-we-engage__item">
+          <h3>Build and Operate</h3>
+          <p>
+            A defined programme to design, build, launch, and support a production system, delivered
+            against milestones and agreed acceptance criteria.
+          </p>
+          <p class="how-we-engage__best-for">
+            <strong>Best for:</strong> mission-critical products, platforms, or AI initiatives that need
+            accountable execution.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="discuss" class="closing-cta">
+    <div class="container-narrow">
+      <h2>Facing a consequential technology decision?</h2>
+      <p>
+        Begin with a structured conversation about the problem, the decision at hand, and the credible
+        path to execution.
+      </p>
+      <a class="btn btn--primary" href="/contact">Discuss a decision</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero {
+    padding: 96px 0 72px;
+  }
+
+  .hero h1 {
+    margin-top: 24px;
+    font-size: var(--text-hero);
+    line-height: var(--lh-hero);
+    letter-spacing: var(--ls-hero);
+    max-width: 16ch;
+  }
+
+  .hero__lede {
+    margin-top: 24px;
+    font-size: var(--text-lede);
+    line-height: var(--lh-lede);
+    color: var(--gray);
+    max-width: 52ch;
+  }
+
+  .hero__ctas {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .btn--primary {
+    background: var(--blue);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 13px 28px;
+  }
+
+  .btn--primary:hover {
+    background: var(--blue-dark);
+  }
+
+  .btn--secondary {
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+
+  .btn--secondary:hover {
+    color: var(--blue);
+    border-color: var(--blue);
+  }
+
+  .decision-framework,
+  .how-we-work,
+  .capabilities,
+  .how-we-engage {
+    padding: 72px 0;
+  }
+
+  .decision-framework__body h2,
+  .how-we-work h2,
+  .capabilities h2,
+  .how-we-engage h2 {
+    font-size: var(--text-h2-section);
+  }
+
+  .decision-framework__body p {
+    margin-top: 20px;
+    font-size: var(--text-body);
+    line-height: var(--lh-body);
+    color: var(--gray);
+  }
+
+  .how-we-work__subline {
+    margin-top: 16px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+    max-width: 60ch;
+  }
+
+  .how-we-work__grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .how-we-work__item h3 {
+    font-size: var(--text-h3);
+  }
+
+  .how-we-work__item p {
+    margin-top: 10px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  .capabilities__list {
+    list-style: none;
+    margin: 32px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .capabilities__list li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .capabilities__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 32px;
+    padding: 20px 0;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .capabilities__row:hover .capabilities__title {
+    color: var(--blue);
+  }
+
+  .capabilities__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  .capabilities__description {
+    font-size: var(--text-support);
+    color: var(--gray);
+    text-align: right;
+    max-width: 46ch;
+  }
+
+  .how-we-engage__grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .how-we-engage__item {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .how-we-engage__item h3 {
+    font-size: var(--text-h3);
+  }
+
+  .how-we-engage__item p {
+    margin-top: 12px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  .how-we-engage__best-for {
+    color: var(--ink);
+  }
+
+  .how-we-engage__best-for strong {
+    font-weight: 600;
+  }
+
+  .closing-cta {
+    background: var(--surface);
+    border-bottom: none;
+  }
+
+  .closing-cta .container-narrow {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    text-align: center;
+  }
+
+  .closing-cta h2 {
+    font-size: var(--text-h2-section);
+    line-height: 1.2;
+  }
+
+  .closing-cta p {
+    margin-top: 16px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  .closing-cta .btn--primary {
+    margin-top: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .hero h1 {
+      font-size: 44px;
+    }
+
+    .how-we-work__grid,
+    .how-we-engage__grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .capabilities__row {
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .capabilities__description {
+      text-align: left;
+    }
+  }
+</style>

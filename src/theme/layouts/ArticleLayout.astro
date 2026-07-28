@@ -1,0 +1,211 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Kicker from '../components/Kicker.astro';
+import AsideBox from '../components/AsideBox.astro';
+import TocRail from '../components/TocRail.astro';
+import RelatedList from '../components/RelatedList.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+interface Author {
+  name: string;
+  role: string;
+  bio: string;
+}
+
+interface Endnote {
+  id: string;
+  text: string;
+}
+
+interface RelatedItem {
+  title: string;
+  meta: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  kicker: string;
+  headline: string;
+  publishedAt: Date;
+  readingTime: string;
+  dek: string;
+  author: Author;
+  sections: { id: string; label: string }[];
+  endnotes?: Endnote[];
+  related: RelatedItem[];
+  closingCtaHeading: string;
+  closingCtaBody: string;
+}
+
+const {
+  title,
+  description,
+  kicker,
+  headline,
+  publishedAt,
+  readingTime,
+  dek,
+  author,
+  sections,
+  endnotes = [],
+  related,
+  closingCtaHeading,
+  closingCtaBody,
+} = Astro.props;
+
+const formattedDate = publishedAt.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="article-grid">
+    <article class="article">
+      <Kicker label={kicker} />
+      <h1>{headline}</h1>
+      <p class="meta">{formattedDate} &middot; {readingTime}</p>
+      <p class="dek">{dek}</p>
+
+      <AsideBox title="About the author">
+        <p>{author.name} — {author.role}</p>
+      </AsideBox>
+
+      <div class="body">
+        <slot />
+      </div>
+
+      {
+        endnotes.length > 0 && (
+          <section class="endnotes" aria-label="Endnotes">
+            <h2>Notes</h2>
+            <ol>
+              {endnotes.map((note) => (
+                <li id={note.id}>{note.text}</li>
+              ))}
+            </ol>
+          </section>
+        )
+      }
+
+      <section class="author-bio">
+        <h2>About the author</h2>
+        <p class="author-bio__name">{author.name}</p>
+        <p class="author-bio__role">{author.role}</p>
+        <p class="author-bio__text">{author.bio}</p>
+      </section>
+    </article>
+
+    <TocRail sections={sections} />
+  </div>
+
+  <RelatedList items={related} />
+  <ClosingCTA heading={closingCtaHeading} body={closingCtaBody} />
+</BaseLayout>
+
+<style>
+  .article-grid {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 64px 24px;
+    display: grid;
+    grid-template-columns: minmax(0, var(--container-narrow)) 240px;
+    gap: 64px;
+  }
+
+  .article h1 {
+    margin-top: 16px;
+    font-size: var(--text-h1-article);
+    line-height: var(--lh-h1-article);
+  }
+
+  .meta {
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    color: var(--gray);
+  }
+
+  .dek {
+    margin-top: 20px;
+    font-size: var(--text-dek);
+    line-height: var(--lh-dek);
+    color: var(--gray);
+  }
+
+  .article :global(.aside-box) {
+    margin-top: 32px;
+  }
+
+  .body {
+    margin-top: 40px;
+    font-size: var(--text-body);
+    line-height: var(--lh-body);
+  }
+
+  .body :global(h2) {
+    font-size: var(--text-h2-content);
+    line-height: var(--lh-h2-content);
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  .body :global(h3) {
+    font-size: var(--text-h3);
+    margin-top: 36px;
+    margin-bottom: 12px;
+  }
+
+  .body :global(p + p) {
+    margin-top: 20px;
+  }
+
+  .endnotes,
+  .author-bio {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .endnotes h2,
+  .author-bio h2 {
+    font-size: var(--text-h3);
+    margin-bottom: 16px;
+  }
+
+  .endnotes ol {
+    padding-left: 20px;
+    font-size: 14px;
+    color: var(--gray);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .author-bio__name {
+    font-weight: 600;
+  }
+
+  .author-bio__role {
+    margin-top: 2px;
+    font-size: 14px;
+    color: var(--gray);
+  }
+
+  .author-bio__text {
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  @media (max-width: 1000px) {
+    .article-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

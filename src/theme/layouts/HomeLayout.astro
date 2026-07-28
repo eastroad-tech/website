@@ -1,0 +1,253 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import DecisionDiagram from '../components/DecisionDiagram.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+interface Stage {
+  number: string;
+  title: string;
+  description: string;
+}
+
+interface Capability {
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface EngagementModel {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  heroHeading: string;
+  heroLede: string;
+  stages: Stage[];
+  capabilities: Capability[];
+  engagementModels: EngagementModel[];
+  closingCtaHeading: string;
+  closingCtaBody: string;
+}
+
+const {
+  title,
+  description,
+  heroHeading,
+  heroLede,
+  stages,
+  capabilities,
+  engagementModels,
+  closingCtaHeading,
+  closingCtaBody,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="hero">
+    <div class="hero__inner">
+      <h1>{heroHeading}</h1>
+      <p class="hero__lede">{heroLede}</p>
+    </div>
+  </section>
+
+  <DecisionDiagram />
+
+  <section class="stages">
+    <div class="stages__inner">
+      {
+        stages.map((stage) => (
+          <div class="stage">
+            <p class="stage__number">{stage.number}</p>
+            <h3>{stage.title}</h3>
+            <p class="stage__description">{stage.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="capabilities">
+    <div class="capabilities__inner">
+      <h2>Capabilities</h2>
+      <ul>
+        {
+          capabilities.map((capability) => (
+            <li>
+              <a class="capability-row" href={capability.href}>
+                <span class="capability-row__title">{capability.title}</span>
+                <span class="capability-row__description">{capability.description}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="engagement-models">
+    <div class="engagement-models__inner">
+      <h2>Engagement models</h2>
+      <div class="engagement-models__grid">
+        {
+          engagementModels.map((model) => (
+            <div class="engagement-model">
+              <h3>{model.title}</h3>
+              <p>{model.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA heading={closingCtaHeading} body={closingCtaBody} />
+</BaseLayout>
+
+<style>
+  .hero {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero__inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 96px 24px 72px;
+  }
+
+  h1 {
+    font-size: var(--text-hero);
+    line-height: var(--lh-hero);
+    letter-spacing: var(--ls-hero);
+    max-width: 14ch;
+  }
+
+  .hero__lede {
+    margin-top: 24px;
+    font-size: var(--text-lede);
+    line-height: var(--lh-lede);
+    color: var(--gray);
+    max-width: 48ch;
+  }
+
+  .stages,
+  .capabilities,
+  .engagement-models {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stages__inner,
+  .capabilities__inner,
+  .engagement-models__inner {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 72px 24px;
+  }
+
+  .stages__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .stage__number {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .stage h3 {
+    font-size: var(--text-h3);
+  }
+
+  .stage__description {
+    margin-top: 10px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  .capabilities h2,
+  .engagement-models h2 {
+    font-size: var(--text-h2-section);
+    margin-bottom: 32px;
+  }
+
+  .capabilities ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .capability-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 32px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .capability-row:hover .capability-row__title {
+    color: var(--blue);
+  }
+
+  .capability-row__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  .capability-row__description {
+    font-size: var(--text-support);
+    color: var(--gray);
+    text-align: right;
+    max-width: 46ch;
+  }
+
+  .engagement-models__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .engagement-model h3 {
+    font-size: var(--text-h3);
+  }
+
+  .engagement-model p {
+    margin-top: 10px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  @media (max-width: 900px) {
+    h1 {
+      font-size: 44px;
+    }
+
+    .stages__inner,
+    .engagement-models__grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .capability-row {
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .capability-row__description {
+      text-align: left;
+    }
+  }
+</style>

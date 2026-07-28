@@ -1,0 +1,107 @@
+---
+import '../styles/tokens.css';
+import '../styles/fonts.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  navItems: { label: string; href: string }[];
+  ctaLabel: string;
+  ctaHref: string;
+  positioningLine: string;
+  footerCapabilities: { label: string; href: string }[];
+  firmLinks: { label: string; href: string }[];
+  details: string[];
+  linkedinUrl?: string;
+  legalLine: string;
+}
+
+const {
+  title,
+  description,
+  navItems,
+  ctaLabel,
+  ctaHref,
+  positioningLine,
+  footerCapabilities,
+  firmLinks,
+  details,
+  linkedinUrl,
+  legalLine,
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <SiteHeader navItems={navItems} ctaLabel={ctaLabel} ctaHref={ctaHref} />
+    <slot />
+    <SiteFooter
+      positioningLine={positioningLine}
+      capabilities={footerCapabilities}
+      firmLinks={firmLinks}
+      details={details}
+      linkedinUrl={linkedinUrl}
+      legalLine={legalLine}
+    />
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+    display: block;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+</style>

@@ -1,0 +1,71 @@
+:root {
+  /* Color */
+  --ink: #141414;
+  --blue: #316F97;
+  --blue-dark: #234F6D;
+  --gray: #686868;      /* text-safe gray — not the logo's #8A8A8A,
+                            which fails WCAG AA at body-text size */
+  --rule: #E2E1DE;
+  --bg: #F6F5F3;
+  --surface: #EFEEEA;   /* boxed components — close to --bg on purpose */
+  --radius: 6px;
+
+  /* Font families */
+  --font-serif: 'IBM Plex Serif', serif;
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Type scale — exact values, do not approximate */
+  --text-hero: 60px;        --lh-hero: 1.08;   --ls-hero: -0.02em;  /* homepage H1 only */
+  --text-h1-article: 44px;  --lh-h1-article: 1.15;                  /* article/whitepaper H1 */
+  --text-h1-case: 38px;     --lh-h1-case: 1.2;                       /* case-study H1 — deliberately smaller */
+  --text-h2-content: 26px;  --lh-h2-content: 1.25;                   /* in-body H2, all content layouts */
+  --text-h2-section: 32px;                                          /* homepage/ClosingCTA section H2 */
+  --text-h3: 21px;
+  --text-dek: 17px;         --lh-dek: 1.6;                           /* article/whitepaper standfirst */
+  --text-lede: 18px;        --lh-lede: 1.6;                          /* homepage hero support line — distinct from dek */
+  --text-support: 15px;     --lh-support: 1.6;                       /* small paragraph under a section H2 */
+  --text-body: 17px;        --lh-body: 1.75;                        /* long-form article/whitepaper/case-study body */
+  --text-kicker: 12px;      --ls-kicker: 0.13em;                     /* mono eyebrow */
+  --text-tag: 11px;         --ls-tag: 0.07em;                        /* mono secondary tag/index */
+  --text-micro: 10px;                                                /* exhibit source lines, sub-labels */
+
+  /* Containers */
+  --container-narrow: 720px;   /* reading column — validated across mockups */
+  /* never built or tested in any mockup — a starting default, expect to revisit */
+  --container-standard: 960px;
+  --container-wide: 1320px;    /* corporate/page wrap — every mockup actually used this, not 1200-1280 */
+}
+
+/*
+ * Grid: the 12-column desktop / 6-column tablet / 4-column mobile grid
+ * described in the original design brief has never actually been
+ * implemented or tested in any built mockup — every mockup used plain
+ * flexbox/max-width layouts instead. The container classes below are a
+ * deliberately simple stand-in, not a grid system. See README.md
+ * "Known placeholders" for the gap this leaves.
+ */
+
+.container-narrow,
+.container-standard,
+.container-wide,
+.container-full {
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.container-narrow {
+  max-width: var(--container-narrow);
+}
+
+.container-standard {
+  max-width: var(--container-standard);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+}
+
+.container-full {
+  max-width: none;
+}

@@ -1,0 +1,149 @@
+---
+interface Props {
+  positioningLine: string;
+  capabilities: { label: string; href: string }[];
+  firmLinks: { label: string; href: string }[];
+  details: string[];
+  linkedinUrl?: string;
+  legalLine: string;
+}
+
+const { positioningLine, capabilities, firmLinks, details, linkedinUrl, legalLine } = Astro.props;
+---
+
+{/* TODO: footer redesign pending — placeholder structure only */}
+<footer class="site-footer">
+  <div class="site-footer__top">
+    <div class="brand">
+      <p class="brand__wordmark">EASTROAD</p>
+      <p class="brand__tagline">{positioningLine}</p>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <p class="column__label">Capabilities</p>
+        <ul class="column__list">
+          {capabilities.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="column">
+        <p class="column__label">Firm</p>
+        <ul class="column__list">
+          {firmLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="column">
+        <p class="column__label">Details</p>
+        <ul class="column__list">
+          {details.map((line) => (
+            <li>{line}</li>
+          ))}
+          {linkedinUrl && (
+            <li>
+              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
+                LinkedIn
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal">
+    <p>{legalLine}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--rule);
+    background: var(--surface);
+    margin-top: 96px;
+  }
+
+  .site-footer__top {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 64px 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    max-width: 320px;
+  }
+
+  .brand__wordmark {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    margin: 0 0 12px;
+  }
+
+  .brand__tagline {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .columns {
+    display: flex;
+    gap: 56px;
+    flex-wrap: wrap;
+  }
+
+  .column__label {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+
+  .column__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .column__list a {
+    font-size: 14px;
+    color: var(--gray);
+    text-decoration: none;
+  }
+
+  .column__list a:hover {
+    color: var(--blue);
+  }
+
+  .legal {
+    border-top: 1px solid var(--rule);
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding: 20px 24px;
+  }
+
+  .legal p {
+    font-size: 13px;
+    color: var(--gray);
+  }
+</style>
