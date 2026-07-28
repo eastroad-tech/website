@@ -21,32 +21,35 @@ import Kicker from '../theme/components/Kicker.astro';
 //   this page's copy calls for "Discuss a decision" as the CTA everywhere,
 //   so the closing section below is hand-built rather than using that
 //   component.
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
   title="Eastroad — Strategy, architecture, and engineering"
   description="Eastroad helps organisations decide what they need from technology, then takes responsibility for the strategy, architecture, and engineering required to act."
   navItems={[
-    { label: 'Capabilities', href: '/capabilities' },
-    { label: 'How we work', href: '/#how-we-work' },
-    { label: 'Research', href: '/research' },
-    { label: 'About', href: '/about' },
+    { label: 'Capabilities', href: `${base}/capabilities` },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
   ]}
   ctaLabel="Discuss a decision"
-  ctaHref="/#discuss"
+  ctaHref={`${base}/#discuss`}
   positioningLine="Strategy. Architecture. Engineering."
   footerCapabilities={[
-    { label: 'Technology Advisory & Strategy', href: '/capabilities/technology-advisory-strategy' },
-    { label: 'Architecture & System Design', href: '/capabilities/architecture-system-design' },
-    { label: 'Software Engineering', href: '/capabilities/softwarae-engineering' },
-    { label: 'AI Systems Engineering', href: '/capabilities/ai-systems-engineering' },
-    { label: 'Commercial Analytics & Data Operations', href: '/capabilities/commercial-analytics-data-operations' },
+    { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+    { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+    { label: 'Software Engineering', href: `${base}/capabilities/softwarae-engineering` },
+    { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+    { label: 'Commercial Analytics & Data Operations', href: `${base}/capabilities/commercial-analytics-data-operations` },
   ]}
   firmLinks={[
-    { label: 'How We Work', href: '/#how-we-work' },
-    { label: 'Research', href: '/research' },
-    { label: 'About', href: '/about' },
-    { label: 'Discuss a decision', href: '/#discuss' },
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Discuss a decision', href: `${base}/#discuss` },
   ]}
   details={[
     'India (HQ)',
@@ -75,8 +78,8 @@ import Kicker from '../theme/components/Kicker.astro';
           finish — the people who frame the answer remain responsible for the system that gets built.
         </p>
         <div class="hero__ctas">
-          <a class="btn btn--primary" href="/contact">Discuss a decision</a>
-          <a class="btn btn--secondary" href="/how-we-work">Explore how we work</a>
+          <a class="btn btn--primary" href={`${base}/contact`}>Discuss a decision</a>
+          <a class="btn btn--secondary" href={`${base}/how-we-work`}>Explore how we work</a>
         </div>
       </div>
     </div>
@@ -174,13 +177,13 @@ import Kicker from '../theme/components/Kicker.astro';
       <h2>Capabilities</h2>
       <ul class="capabilities__list">
         <li>
-          <a class="capabilities__row" href="/capabilities/technology-advisory-strategy">
+          <a class="capabilities__row" href={`${base}/capabilities/technology-advisory-strategy`}>
             <span class="capabilities__title">Technology Advisory &amp; Strategy</span>
             <span class="capabilities__description">How can technology transform your business. What software stack to build, why, and in what order.</span>
           </a>
         </li>
         <li>
-          <a class="capabilities__row" href="/capabilities/architecture-system-design">
+          <a class="capabilities__row" href={`${base}/capabilities/architecture-system-design`}>
             <span class="capabilities__title">Architecture &amp; System Design</span>
             <span class="capabilities__description">
               The structure, data, interfaces, and controls a system needs before it's built.
@@ -188,7 +191,7 @@ import Kicker from '../theme/components/Kicker.astro';
           </a>
         </li>
         <li>
-          <a class="capabilities__row" href="/capabilities/product-engineering">
+          <a class="capabilities__row" href={`${base}/capabilities/product-engineering`}>
             <span class="capabilities__title">Software Engineering</span>
             <span class="capabilities__description">
               From product design to a live, maintained system — the same team that designs it builds it.
@@ -196,7 +199,7 @@ import Kicker from '../theme/components/Kicker.astro';
           </a>
         </li>
         <li>
-          <a class="capabilities__row" href="/capabilities/ai-systems-engineering">
+          <a class="capabilities__row" href={`${base}/capabilities/ai-systems-engineering`}>
             <span class="capabilities__title">AI Systems Engineering</span>
             <span class="capabilities__description">
               Model evaluation, training data, retrieval, and the governance that keeps agents running in
@@ -205,7 +208,7 @@ import Kicker from '../theme/components/Kicker.astro';
           </a>
         </li>
         <li>
-          <a class="capabilities__row" href="/capabilities/commercial-analytics-data-operations">
+          <a class="capabilities__row" href={`${base}/capabilities/commercial-analytics-data-operations`}>
             <span class="capabilities__title">Commercial Analytics &amp; Data Operations</span>
             <span class="capabilities__description">
               Measurement, data quality, pricing, and the training-data infrastructure that supports both
@@ -283,7 +286,7 @@ import Kicker from '../theme/components/Kicker.astro';
           Begin with a structured conversation about the problem, the decision at hand, and the credible
           path to execution.
         </p>
-        <a class="btn btn--primary" href="/contact">Discuss a decision</a>
+        <a class="btn btn--primary" href={`${base}/contact`}>Discuss a decision</a>
       </div>
     </div>
   </section>
