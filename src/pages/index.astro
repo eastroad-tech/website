@@ -57,7 +57,13 @@ import Kicker from '../theme/components/Kicker.astro';
 >
   <section class="hero">
     <div class="hero-bg">
-      <!-- background graphic goes here later -->
+      <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <polygon points="640,0 680,0 700,520 660,520" fill="var(--blue)" opacity="0.05"></polygon>
+        <polygon points="790,0 860,0 890,520 820,520" fill="var(--ink)" opacity="0.06"></polygon>
+        <polygon points="940,0 990,0 1030,520 980,520" fill="var(--blue)" opacity="0.10"></polygon>
+        <polygon points="1040,0 1130,0 1210,520 1130,520" fill="var(--blue)" opacity="0.18"></polygon>
+        <polygon points="1090,0 1170,0 1220,520 1130,520" fill="var(--ink)" opacity="0.05"></polygon>
+      </svg>
     </div>
     <div class="container-wide">
       <div class="hero-content">
@@ -298,6 +304,11 @@ import Kicker from '../theme/components/Kicker.astro';
     position: absolute;
     inset: 0;
     z-index: 0;
+  }
+
+  .hero-bg svg {
+    width: 100%;
+    height: 100%;
   }
 
   .hero-content {
