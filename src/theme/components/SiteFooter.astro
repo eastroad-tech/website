@@ -42,7 +42,7 @@ const { positioningLine, capabilities, firmLinks, details, linkedinUrl, legalLin
         </ul>
       </div>
 
-      <div class="column">
+      <div class="column column--details">
         <p class="column__label">Details</p>
         <ul class="column__list">
           {details.map((line) => (
@@ -69,7 +69,6 @@ const { positioningLine, capabilities, firmLinks, details, linkedinUrl, legalLin
   .site-footer {
     border-top: 1px solid var(--rule);
     background: var(--surface);
-    margin-top: 96px;
   }
 
   .site-footer__top {
@@ -125,14 +124,22 @@ const { positioningLine, capabilities, firmLinks, details, linkedinUrl, legalLin
     gap: 10px;
   }
 
-  .column__list a {
+  .column__list li {
     font-size: 14px;
     color: var(--gray);
+  }
+
+  .column__list a {
+    color: inherit;
     text-decoration: none;
   }
 
   .column__list a:hover {
     color: var(--blue);
+  }
+
+  .column--details {
+    max-width: 240px;
   }
 
   .legal {

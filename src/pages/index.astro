@@ -56,30 +56,35 @@ import Kicker from '../theme/components/Kicker.astro';
   legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
 >
   <section class="hero">
+    <div class="hero-bg">
+      <!-- background graphic goes here later -->
+    </div>
     <div class="container-wide">
-      <Kicker label="Strategy. Architecture. Engineering." />
-      <h1>What does your business need from technology?</h1>
-      <p class="hero__lede">
-        Eastroad helps organisations answer that question with rigor, then takes responsibility for
-        what follows: the strategy, architecture, and engineering required to act. One team, start to
-        finish — the people who frame the answer remain responsible for the system that gets built.
-      </p>
-      <div class="hero__ctas">
-        <a class="btn btn--primary" href="/contact">Discuss a decision</a>
-        <a class="btn btn--secondary" href="/how-we-work">Explore how we work</a>
+      <div class="hero-content">
+        <Kicker label="Strategy. Architecture. Engineering." />
+        <h1>What does your business need from technology?</h1>
+        <p class="hero__lede">
+          Eastroad helps organisations answer that question with rigor, then takes responsibility for
+          what follows: the strategy, architecture, and engineering required to act. One team, start to
+          finish — the people who frame the answer remain responsible for the system that gets built.
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="/contact">Discuss a decision</a>
+          <a class="btn btn--secondary" href="/how-we-work">Explore how we work</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!--
     Decision Framework: text-only for now. A diagram can be dropped in as a
-    sibling of .decision-framework__body inside .container-narrow later
-    without restructuring this section.
+    sibling of .df-body inside .decision-framework__grid later without
+    restructuring this section.
   -->
   <section class="decision-framework">
-    <div class="container-narrow">
-      <div class="decision-framework__body">
-        <h2>Start with the problem, not the technology.</h2>
+    <div class="container-wide decision-framework__grid">
+      <h2 class="df-heading">Start with the problem, not the technology.</h2>
+      <div class="df-body">
         <p>
           Every engagement begins with an assessment: what problem exists, what's genuinely at stake,
           and what response it demands. AI is one possible answer to that question — not the default
@@ -102,18 +107,28 @@ import Kicker from '../theme/components/Kicker.astro';
       <p class="how-we-work__subline">
         The people who frame the decision remain accountable for the system it produces.
       </p>
-      <div class="how-we-work__grid">
-        <div class="how-we-work__item">
-          <h3>Strategise</h3>
-          <p>What to build, why, and in what order.</p>
+      <div class="work-stages">
+        <div class="stages-line"></div>
+        <div class="work-stage">
+          <span class="stage-node"></span>
+          <div class="stage-content">
+            <h3>Strategise</h3>
+            <p>How can technology transform your business? What software stack to build, why, and in what order.</p>
+          </div>
         </div>
-        <div class="how-we-work__item">
-          <h3>Architect</h3>
-          <p>How the system should be designed before it's built.</p>
+        <div class="work-stage">
+          <span class="stage-node"></span>
+          <div class="stage-content">
+            <h3>Architect</h3>
+            <p>How the system should be designed before it's built.</p>
+          </div>
         </div>
-        <div class="how-we-work__item">
-          <h3>Engineer</h3>
-          <p>A production system, not a proof of concept.</p>
+        <div class="work-stage">
+          <span class="stage-node"></span>
+          <div class="stage-content">
+            <h3>Engineer</h3>
+            <p>A production system, not a proof of concept.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -208,13 +223,33 @@ import Kicker from '../theme/components/Kicker.astro';
   </section>
 
   <section id="discuss" class="closing-cta">
-    <div class="container-narrow">
-      <h2>Facing a consequential technology decision?</h2>
-      <p>
-        Begin with a structured conversation about the problem, the decision at hand, and the credible
-        path to execution.
-      </p>
-      <a class="btn btn--primary" href="/contact">Discuss a decision</a>
+    <div class="closing-cta__bg">
+      <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice">
+        <path
+          d="M0,420 L160,300 L320,380 L500,260 L700,370 L900,270 L1080,380 L1200,320 L1200,520 L0,520 Z"
+          fill="#1E2A35"
+          opacity="0.55"
+        ></path>
+        <path
+          d="M80,520 L80,400 L280,230 L470,410 L650,250 L850,430 L1020,280 L1200,420 L1200,520 Z"
+          fill="var(--blue-dark)"
+          opacity="0.5"
+        ></path>
+        <path d="M140,520 L260,190 L360,250 L320,520 Z" fill="var(--blue)" opacity="0.65"></path>
+        <path d="M660,520 L820,80 L950,160 L890,520 Z" fill="var(--blue)" opacity="0.65"></path>
+        <path d="M1020,520 L1110,260 L1180,300 L1150,520 Z" fill="var(--blue)" opacity="0.65"></path>
+      </svg>
+    </div>
+    <div class="container-wide">
+      <div class="closing-cta__content">
+        <div class="closing-cta__eyebrow">Strategy. Architecture. Engineering.</div>
+        <h2>Facing a consequential technology decision?</h2>
+        <p>
+          Begin with a structured conversation about the problem, the decision at hand, and the credible
+          path to execution.
+        </p>
+        <a class="btn btn--primary" href="/contact">Discuss a decision</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -225,7 +260,21 @@ import Kicker from '../theme/components/Kicker.astro';
   }
 
   .hero {
+    position: relative;
+    overflow: hidden;
     padding: 96px 0 72px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-narrow);
   }
 
   .hero h1 {
@@ -272,8 +321,8 @@ import Kicker from '../theme/components/Kicker.astro';
   }
 
   .btn--secondary {
-    color: var(--ink);
-    border-bottom: 1px solid var(--rule);
+    color: var(--blue);
+    border-bottom: 1px solid var(--blue);
     padding-bottom: 2px;
   }
 
@@ -289,18 +338,37 @@ import Kicker from '../theme/components/Kicker.astro';
     padding: 72px 0;
   }
 
-  .decision-framework__body h2,
   .how-we-work h2,
   .capabilities h2,
   .how-we-engage h2 {
     font-size: var(--text-h2-section);
   }
 
-  .decision-framework__body p {
+  .decision-framework__grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 320px) 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .df-heading {
+    font-size: var(--text-h2-content);
+    line-height: var(--lh-h2-content);
+  }
+
+  .df-body {
+    max-width: var(--container-narrow);
+  }
+
+  .df-body p {
     margin-top: 20px;
     font-size: var(--text-body);
     line-height: var(--lh-body);
     color: var(--gray);
+  }
+
+  .df-body p:first-child {
+    margin-top: 0;
   }
 
   .how-we-work__subline {
@@ -311,18 +379,46 @@ import Kicker from '../theme/components/Kicker.astro';
     max-width: 60ch;
   }
 
-  .how-we-work__grid {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  .work-stages {
+    display: flex;
     gap: 40px;
+    margin-top: 40px;
+    position: relative;
   }
 
-  .how-we-work__item h3 {
+  /* right: pinned to the last (of 3 equal, 40px-gapped) column's own node center, not the container edge */
+  .stages-line {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    right: calc((100% - 80px) / 3 - 7px);
+    height: 1px;
+    background: var(--blue);
+    z-index: 0;
+  }
+
+  .work-stage {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+  }
+
+  .stage-node {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    background: var(--bg);
+    margin-bottom: 16px;
+    z-index: 1;
+  }
+
+  .stage-content h3 {
     font-size: var(--text-h3);
   }
 
-  .how-we-work__item p {
+  .stage-content p {
     margin-top: 10px;
     font-size: var(--text-support);
     line-height: var(--lh-support);
@@ -333,11 +429,18 @@ import Kicker from '../theme/components/Kicker.astro';
     list-style: none;
     margin: 32px 0 0;
     padding: 0;
-    border-top: 1px solid var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
   }
 
   .capabilities__list li {
     border-bottom: 1px solid var(--rule);
+  }
+
+  .capabilities__list li:last-child {
+    border-bottom: none;
   }
 
   .capabilities__row {
@@ -345,7 +448,7 @@ import Kicker from '../theme/components/Kicker.astro';
     justify-content: space-between;
     align-items: baseline;
     gap: 32px;
-    padding: 20px 0;
+    padding: 20px 24px;
     text-decoration: none;
     color: var(--ink);
   }
@@ -364,7 +467,7 @@ import Kicker from '../theme/components/Kicker.astro';
   .capabilities__description {
     font-size: var(--text-support);
     color: var(--gray);
-    text-align: right;
+    text-align: left;
     max-width: 46ch;
   }
 
@@ -402,26 +505,55 @@ import Kicker from '../theme/components/Kicker.astro';
   }
 
   .closing-cta {
-    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
     border-bottom: none;
   }
 
-  .closing-cta .container-narrow {
+  .closing-cta__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .closing-cta__bg svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .closing-cta .container-wide {
+    position: relative;
+    z-index: 1;
+  }
+
+  .closing-cta__content {
+    max-width: var(--container-narrow);
     padding-top: 80px;
     padding-bottom: 80px;
-    text-align: center;
+  }
+
+  .closing-cta__eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--text-kicker);
+    letter-spacing: var(--ls-kicker);
+    text-transform: uppercase;
+    color: #5f93b4;
   }
 
   .closing-cta h2 {
+    margin-top: 16px;
     font-size: var(--text-h2-section);
     line-height: 1.2;
+    color: #fff;
   }
 
   .closing-cta p {
     margin-top: 16px;
     font-size: var(--text-support);
     line-height: var(--lh-support);
-    color: var(--gray);
+    color: #c9cdcf;
   }
 
   .closing-cta .btn--primary {
@@ -433,10 +565,45 @@ import Kicker from '../theme/components/Kicker.astro';
       font-size: 44px;
     }
 
-    .how-we-work__grid,
+    .decision-framework__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
     .how-we-engage__grid {
       grid-template-columns: 1fr;
       gap: 32px;
+    }
+
+    .work-stages {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .stages-line {
+      display: none;
+    }
+
+    .work-stage {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .stage-node {
+      margin-bottom: 0;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .work-stage:not(:last-child) .stage-node::after {
+      content: '';
+      position: absolute;
+      top: 13px;
+      left: 7px;
+      width: 1px;
+      height: calc(100% + 32px);
+      background: var(--blue);
     }
 
     .capabilities__row {

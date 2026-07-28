@@ -10,7 +10,9 @@ const { navItems, ctaLabel, ctaHref } = Astro.props;
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="wordmark" href="/">EASTROAD</a>
+    <a class="logo-link" href="/">
+      <img class="logo" src="/logo.svg" alt="Eastroad Technologies" height="34" />
+    </a>
 
     <nav class="nav" aria-label="Primary">
       <ul class="nav__list">
@@ -24,9 +26,32 @@ const { navItems, ctaLabel, ctaHref } = Astro.props;
           ))
         }
       </ul>
+
+      <a class="cta" href={ctaHref}>{ctaLabel}</a>
     </nav>
 
-    <a class="cta" href={ctaHref}>{ctaLabel}</a>
+    <button
+      class="menu-toggle"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden data-mobile-menu>
+    <ul class="mobile-menu__list">
+      {
+        navItems.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <a class="mobile-menu__cta" href={ctaHref}>{ctaLabel}</a>
   </div>
 </header>
 
@@ -42,21 +67,24 @@ const { navItems, ctaLabel, ctaHref } = Astro.props;
     padding: 20px 24px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 32px;
   }
 
-  .wordmark {
-    font-family: var(--font-mono);
-    font-weight: 500;
-    font-size: 15px;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    text-decoration: none;
-    white-space: nowrap;
+  .logo-link {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    display: block;
+    width: auto;
   }
 
   .nav {
-    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 36px;
   }
 
   .nav__list {
@@ -97,20 +125,92 @@ const { navItems, ctaLabel, ctaHref } = Astro.props;
     color: #fff;
   }
 
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
   @media (max-width: 760px) {
-    .site-header__inner {
-      flex-wrap: wrap;
+    .nav {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .mobile-menu {
+      display: block;
+      border-top: 1px solid var(--rule);
+      padding: 20px 24px 24px;
+    }
+
+    .mobile-menu[hidden] {
+      display: none;
+    }
+
+    .mobile-menu__list {
+      list-style: none;
+      margin: 0 0 20px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
 
-    .nav {
-      order: 3;
-      flex-basis: 100%;
+    .mobile-menu__list a {
+      font-size: 15px;
+      color: var(--ink);
+      text-decoration: none;
     }
 
-    .nav__list {
-      gap: 20px;
-      flex-wrap: wrap;
+    .mobile-menu__cta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--blue);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 13px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .mobile-menu__cta:hover {
+      background: var(--blue-dark);
     }
   }
 </style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = !menu.hidden;
+      menu.hidden = isOpen;
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+  }
+</script>
