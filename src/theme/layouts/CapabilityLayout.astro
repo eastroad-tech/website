@@ -1,0 +1,203 @@
+---
+import AsideBox from '../components/AsideBox.astro';
+import RelatedList from '../components/RelatedList.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+interface EngagementFit {
+  text: string;
+  linkLabel: string;
+  linkHref: string;
+}
+
+interface RelatedCapability {
+  label: string;
+  href: string;
+}
+
+interface RelatedResearchItem {
+  title: string;
+  meta: string;
+  href: string;
+}
+
+interface Props {
+  breadcrumb: string;
+  title: string;
+  dek: string;
+  framingParagraphs: string[];
+  scope: string[];
+  engagementFit: EngagementFit;
+  relatedCapability: RelatedCapability;
+  relatedResearch?: RelatedResearchItem[];
+}
+
+const {
+  breadcrumb,
+  title,
+  dek,
+  framingParagraphs,
+  scope,
+  engagementFit,
+  relatedCapability,
+  relatedResearch = [],
+} = Astro.props;
+---
+
+<article class="capability">
+  <header class="capability__header">
+    <p class="breadcrumb">{breadcrumb}</p>
+    <h1>{title}</h1>
+    <p class="dek">{dek}</p>
+  </header>
+
+  <div class="capability__body">
+    <div class="framing">
+      {framingParagraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+    </div>
+
+    <AsideBox title="What's delivered">
+      <ul class="scope-list">
+        {scope.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </AsideBox>
+
+    <p class="engagement-fit">
+      {engagementFit.text} <a class="inline-link" href={engagementFit.linkHref}>{engagementFit.linkLabel}</a>
+    </p>
+
+    <a class="related-capability" href={relatedCapability.href}>
+      <span class="related-capability__eyebrow">Related capability</span>
+      <span class="related-capability__name">{relatedCapability.label}</span>
+    </a>
+  </div>
+</article>
+
+{
+  relatedResearch.length > 0 && (
+    <RelatedList items={relatedResearch} heading="Related research" />
+  )
+}
+
+<ClosingCTA
+  heading="Facing a consequential technology decision?"
+  body="Begin with a structured conversation about the problem, the decision at hand, and the credible path to execution."
+/>
+
+<style>
+  .capability__header {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 72px 24px 0;
+  }
+
+  .breadcrumb {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    color: var(--gray);
+  }
+
+  h1 {
+    margin-top: 16px;
+    font-size: var(--text-h1-article);
+    line-height: var(--lh-h1-article);
+  }
+
+  .dek {
+    margin-top: 20px;
+    font-size: var(--text-dek);
+    line-height: var(--lh-dek);
+    color: var(--gray);
+  }
+
+  .capability__body {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding: 40px 24px 72px;
+  }
+
+  .framing p {
+    margin-top: 20px;
+    font-size: var(--text-body);
+    line-height: var(--lh-body);
+    color: var(--gray);
+  }
+
+  .framing p:first-child {
+    margin-top: 0;
+  }
+
+  .capability__body :global(.aside-box) {
+    margin-top: 40px;
+  }
+
+  .scope-list {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .scope-list li {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .scope-list li::marker {
+    color: var(--blue);
+  }
+
+  .engagement-fit {
+    margin-top: 40px;
+    font-size: var(--text-support);
+    line-height: var(--lh-support);
+    color: var(--gray);
+  }
+
+  .inline-link {
+    color: var(--blue);
+    border-bottom: 1px solid var(--blue);
+    padding-bottom: 1px;
+    text-decoration: none;
+  }
+
+  .inline-link:hover {
+    color: var(--blue-dark);
+    border-color: var(--blue-dark);
+  }
+
+  .related-capability {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .related-capability:hover .related-capability__name {
+    color: var(--blue);
+  }
+
+  .related-capability__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-tag);
+    letter-spacing: var(--ls-tag);
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .related-capability__name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 19px;
+  }
+</style>
