@@ -13,6 +13,7 @@ interface Props {
 
 const { navItems, ctaLabel, ctaHref } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isExternalCta = /^https?:\/\//.test(ctaHref);
 ---
 
 <header class="site-header">
@@ -58,7 +59,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         }
       </ul>
 
-      <a class="cta" href={ctaHref}>{ctaLabel}</a>
+      <a
+        class="cta"
+        href={ctaHref}
+        target={isExternalCta ? '_blank' : undefined}
+        rel={isExternalCta ? 'noopener noreferrer' : undefined}
+      >
+        {ctaLabel}
+      </a>
     </nav>
 
     <button
@@ -103,7 +111,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         )
       }
     </ul>
-    <a class="mobile-menu__cta" href={ctaHref}>{ctaLabel}</a>
+    <a
+      class="mobile-menu__cta"
+      href={ctaHref}
+      target={isExternalCta ? '_blank' : undefined}
+      rel={isExternalCta ? 'noopener noreferrer' : undefined}
+    >
+      {ctaLabel}
+    </a>
   </div>
 </header>
 

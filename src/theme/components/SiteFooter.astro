@@ -34,11 +34,20 @@ const { positioningLine, capabilities, firmLinks, details, linkedinUrl, legalLin
       <div class="column">
         <p class="column__label">Firm</p>
         <ul class="column__list">
-          {firmLinks.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
+          {firmLinks.map((link) => {
+            const isExternal = /^https?:\/\//.test(link.href);
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
