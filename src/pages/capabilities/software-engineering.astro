@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../theme/layouts/BaseLayout.astro';
+import CapabilityLayout from '../../theme/layouts/CapabilityLayout.astro';
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Single source for the five capability pages — feeds both the nav
+// dropdown and the footer's Capabilities column.
+const capabilitiesList = [
+  { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+  { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+  { label: 'Software Engineering', href: `${base}/capabilities/software-engineering` },
+  { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+  { label: 'Analytics & Calibration Operations', href: `${base}/capabilities/analytics-calibration-operations` },
+];
+---
+<BaseLayout
+  title="Software Engineering — Eastroad"
+  description="From system design to a live, maintained piece of software — the same team that designs it builds it."
+  navItems={[
+    { label: 'Capabilities', href: `${base}/capabilities`, children: capabilitiesList },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+  ]}
+  ctaLabel="Talk to us"
+  ctaHref={`${base}/contact`}
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={capabilitiesList}
+  firmLinks={[
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Talk to us', href: `${base}/#discuss` },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <CapabilityLayout
+    breadcrumb="Capabilities / Software Engineering"
+    title="Software Engineering"
+    dek="From system design to a live, maintained piece of software — the same team that designs it builds it."
+    framingParagraphs={[
+      "Most software is tested by production, not by design review: real usage, shifting requirements, and operating constraints that are only partly visible before launch.",
+      "The team responsible for the design carries it through build, launch, and what comes after — so production behavior stays connected to what was actually intended, not just what was specified."
+    ]}
+    scope={[
+      "UX and interaction design",
+      "Full-stack engineering — web, mobile, API",
+      "Application integration with data and external services",
+      "A/B testing and experimentation infrastructure",
+      "Customer lifecycle and engagement infrastructure",
+      "Post-launch iteration and maintenance"
+    ]}
+    engagementFit={{
+      text: "Software Engineering most often takes the form of a Build and Operate engagement — a defined programme to design, build, launch, and support production software. It can also begin directly after an Architecture & System Design engagement, once the system design and technical approach are settled.",
+      linkLabel: "See how we engage",
+      linkHref: `${base}/#how-we-engage`
+    }}
+    relatedCapability={{
+      label: "AI Systems Engineering — where models, retrieval, training data, and production controls are engineered as their own system layer.",
+      href: `${base}/capabilities/ai-systems-engineering`
+    }}
+  />
+</BaseLayout>

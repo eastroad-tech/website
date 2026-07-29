@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../theme/layouts/BaseLayout.astro';
+import Kicker from '../theme/components/Kicker.astro';
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Single source for the five capability pages — feeds both the nav
+// dropdown and the footer's Capabilities column.
+const capabilitiesList = [
+  { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+  { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+  { label: 'Software Engineering', href: `${base}/capabilities/software-engineering` },
+  { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+  { label: 'Analytics & Calibration Operations', href: `${base}/capabilities/analytics-calibration-operations` },
+];
+---
+<BaseLayout
+  title="Contact — Eastroad Technologies"
+  description="Get in touch with Eastroad Technologies."
+  navItems={[
+    { label: 'Capabilities', href: `${base}/capabilities`, children: capabilitiesList },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+  ]}
+  ctaLabel="Talk to us"
+  ctaHref={`${base}/contact`}
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={capabilitiesList}
+  firmLinks={[
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Talk to us', href: `${base}/#discuss` },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <div class="container-narrow contact">
+    <Kicker label="Contact" />
+    <h1>Let's talk.</h1>
+    <p class="dek">
+      We're finishing our scheduling setup. In the meantime, email us at{' '}
+      <a class="inline-link" href="mailto:sidharth.gautam.sharma@gmail.com">sidharth.gautam.sharma@gmail.com</a>{' '}
+      and we'll get back to you directly.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact {
+    /* .container-narrow already supplies the horizontal gutter (padding-inline)
+       and max-width — only vertical spacing is added here. */
+    padding-top: 96px;
+    padding-bottom: 120px;
+  }
+
+  .contact h1 {
+    margin-top: 16px;
+    font-size: var(--text-h1-article);
+    line-height: var(--lh-h1-article);
+  }
+
+  .contact .dek {
+    margin-top: 20px;
+    font-size: var(--text-dek);
+    line-height: var(--lh-dek);
+    color: var(--gray);
+  }
+
+  .inline-link {
+    color: var(--blue);
+    border-bottom: 1px solid var(--blue);
+    padding-bottom: 1px;
+    text-decoration: none;
+  }
+
+  .inline-link:hover {
+    color: var(--blue-dark);
+    border-color: var(--blue-dark);
+  }
+</style>

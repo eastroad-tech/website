@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../theme/layouts/BaseLayout.astro';
+import CapabilityLayout from '../../theme/layouts/CapabilityLayout.astro';
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Single source for the five capability pages — feeds both the nav
+// dropdown and the footer's Capabilities column.
+const capabilitiesList = [
+  { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+  { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+  { label: 'Software Engineering', href: `${base}/capabilities/software-engineering` },
+  { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+  { label: 'Analytics & Calibration Operations', href: `${base}/capabilities/analytics-calibration-operations` },
+];
+---
+<BaseLayout
+  title="Technology Advisory & Strategy — Eastroad"
+  description="What to build, why, and in what order."
+  navItems={[
+    { label: 'Capabilities', href: `${base}/capabilities`, children: capabilitiesList },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+  ]}
+  ctaLabel="Talk to us"
+  ctaHref={`${base}/contact`}
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={capabilitiesList}
+  firmLinks={[
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Talk to us', href: `${base}/#discuss` },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <CapabilityLayout
+    breadcrumb="Capabilities / Technology Advisory & Strategy"
+    title="Technology Advisory & Strategy"
+    dek="What to build, why, and in what order."
+    framingParagraphs={[
+      "Every technology investment starts as a business question. Whether to build, buy, integrate, modernise, or defer should be decided with explicit assumptions, clear trade-offs, and a view of the cost of acting — or not acting.",
+      "This is where the decision is clarified, tested, and turned into a practical path forward. We don't hand off a roadmap and step away — the same people carry it into architecture and engineering, so strategy stays connected to what gets built."
+    ]}
+    scope={[
+      "Technology strategy and AI opportunity assessment",
+      "Product discovery and opportunity sizing",
+      "Build vs. buy vs. integrate analysis",
+      "Roadmap design and investment sequencing",
+      "Go-to-market planning for technology products",
+      "Board and C-suite technology communication"
+    ]}
+    engagementFit={{
+      text: "Most Technology Advisory & Strategy work begins as a Diagnostic — a fixed-scope assessment when a decision is stalled, unclear, or hasn't yet been pressure-tested. If an organisation needs this judgment on an ongoing basis rather than for one decision, it continues as Embedded Advisory.",
+      linkLabel: "See how we engage",
+      linkHref: `${base}/#how-we-engage`
+    }}
+    relatedCapability={{
+      label: "Architecture & System Design — where the decision becomes a system design.",
+      href: `${base}/capabilities/architecture-system-design`
+    }}
+  />
+</BaseLayout>

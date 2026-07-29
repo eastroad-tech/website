@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../theme/layouts/BaseLayout.astro';
+import CapabilityLayout from '../../theme/layouts/CapabilityLayout.astro';
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Single source for the five capability pages — feeds both the nav
+// dropdown and the footer's Capabilities column.
+const capabilitiesList = [
+  { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+  { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+  { label: 'Software Engineering', href: `${base}/capabilities/software-engineering` },
+  { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+  { label: 'Analytics & Calibration Operations', href: `${base}/capabilities/analytics-calibration-operations` },
+];
+---
+<BaseLayout
+  title="AI Systems Engineering — Eastroad"
+  description="Model evaluation, training data, retrieval, and the controls required to operate AI systems in production."
+  navItems={[
+    { label: 'Capabilities', href: `${base}/capabilities`, children: capabilitiesList },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+  ]}
+  ctaLabel="Talk to us"
+  ctaHref={`${base}/contact`}
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={capabilitiesList}
+  firmLinks={[
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Talk to us', href: `${base}/#discuss` },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <CapabilityLayout
+    breadcrumb="Capabilities / AI Systems Engineering"
+    title="AI Systems Engineering"
+    dek="Model evaluation, training data, retrieval, and the controls required to operate AI systems in production."
+    framingParagraphs={[
+      "AI systems fail differently from conventional software — behavior is a distribution, not a binary, and it can drift as the data and usage underneath it change.",
+      "Evaluation, retrieval, guardrails, and monitoring aren't peripheral. They're the engineering layer that makes model behavior testable and supportable in production, not just something that worked in a demo."
+    ]}
+    scope={[
+      "AI model evaluation and selection — cost, latency, and accuracy benchmarked against domain data",
+      "Training data pipeline design and implementation",
+      "RAG pipeline design, chunking strategy, and retrieval optimisation",
+      "Production agent harness architecture and deployment",
+      "MLOps, model monitoring, and drift detection",
+      "AI governance, explainability, and audit infrastructure",
+      "Inference cost reduction — quantisation, batching, and caching"
+    ]}
+    engagementFit={{
+      text: "AI Systems Engineering often begins as a Diagnostic when an existing AI investment is underperforming on cost, accuracy, or reliability. It also takes the form of Build and Operate when a new AI capability must be designed, evaluated, and run in production from the outset.",
+      linkLabel: "See how we engage",
+      linkHref: `${base}/#how-we-engage`
+    }}
+    relatedCapability={{
+      label: "Analytics & Calibration Operations — where measurement, data quality, and training-data operations support the systems built here.",
+      href: `${base}/capabilities/analytics-calibration-operations`
+    }}
+  />
+</BaseLayout>

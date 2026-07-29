@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../theme/layouts/BaseLayout.astro';
+import Kicker from '../theme/components/Kicker.astro';
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Single source for the five capability pages — feeds both the nav
+// dropdown and the footer's Capabilities column.
+const capabilitiesList = [
+  { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+  { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+  { label: 'Software Engineering', href: `${base}/capabilities/software-engineering` },
+  { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+  { label: 'Analytics & Calibration Operations', href: `${base}/capabilities/analytics-calibration-operations` },
+];
+---
+<BaseLayout
+  title="Page not found — Eastroad Technologies"
+  description="This page doesn't exist."
+  navItems={[
+    { label: 'Capabilities', href: `${base}/capabilities`, children: capabilitiesList },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+  ]}
+  ctaLabel="Talk to us"
+  ctaHref={`${base}/contact`}
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={capabilitiesList}
+  firmLinks={[
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Talk to us', href: `${base}/#discuss` },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <div class="container-narrow not-found">
+    <Kicker label="404" />
+    <h1>This page doesn't exist.</h1>
+    <p class="dek">The link may be outdated, or the page may have moved. Here's where you can go instead.</p>
+    <div class="not-found__ctas">
+      <a href={`${base}/`} class="btn btn--primary">Back to homepage</a>
+      <a href={`${base}/#discuss`} class="btn btn--secondary">Talk to us</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    /* .container-narrow already supplies the horizontal gutter (padding-inline)
+       and max-width — only vertical spacing is added here. */
+    padding-top: 96px;
+    padding-bottom: 120px;
+  }
+
+  .not-found h1 {
+    margin-top: 16px;
+    font-size: var(--text-h1-article);
+    line-height: var(--lh-h1-article);
+  }
+
+  .not-found .dek {
+    margin-top: 20px;
+    font-size: var(--text-dek);
+    line-height: var(--lh-dek);
+    color: var(--gray);
+  }
+
+  .not-found__ctas {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .not-found .btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .not-found .btn--primary {
+    background: var(--blue);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 13px 28px;
+  }
+
+  .not-found .btn--primary:hover {
+    background: var(--blue-dark);
+  }
+
+  .not-found .btn--secondary {
+    color: var(--blue);
+    border-bottom: 1px solid var(--blue);
+    padding-bottom: 2px;
+  }
+
+  .not-found .btn--secondary:hover {
+    color: var(--blue);
+    border-color: var(--blue-dark);
+  }
+</style>

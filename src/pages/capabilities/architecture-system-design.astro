@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../theme/layouts/BaseLayout.astro';
+import CapabilityLayout from '../../theme/layouts/CapabilityLayout.astro';
+
+// Normalized so `${base}/path` is correct whether BASE_URL is "/", "/website", etc.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Single source for the five capability pages — feeds both the nav
+// dropdown and the footer's Capabilities column.
+const capabilitiesList = [
+  { label: 'Technology Advisory & Strategy', href: `${base}/capabilities/technology-advisory-strategy` },
+  { label: 'Architecture & System Design', href: `${base}/capabilities/architecture-system-design` },
+  { label: 'Software Engineering', href: `${base}/capabilities/software-engineering` },
+  { label: 'AI Systems Engineering', href: `${base}/capabilities/ai-systems-engineering` },
+  { label: 'Analytics & Calibration Operations', href: `${base}/capabilities/analytics-calibration-operations` },
+];
+---
+<BaseLayout
+  title="Architecture & System Design — Eastroad"
+  description="The structure, data, interfaces, and controls a system needs before it's built."
+  navItems={[
+    { label: 'Capabilities', href: `${base}/capabilities`, children: capabilitiesList },
+    { label: 'How we work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+  ]}
+  ctaLabel="Talk to us"
+  ctaHref={`${base}/contact`}
+  positioningLine="Strategy. Architecture. Engineering."
+  footerCapabilities={capabilitiesList}
+  firmLinks={[
+    { label: 'How We Work', href: `${base}/#how-we-work` },
+    { label: 'Research', href: `${base}/research` },
+    { label: 'About', href: `${base}/about` },
+    { label: 'Talk to us', href: `${base}/#discuss` },
+  ]}
+  details={[
+    'India (HQ)',
+    'Client engagements across North America, Europe, the Middle East, and South Asia',
+  ]}
+  linkedinUrl="https://www.linkedin.com/company/eastroad-technologies"
+  legalLine="© 2026 Eastroad Technologies Pvt. Ltd. · Privacy · Terms"
+>
+  <CapabilityLayout
+    breadcrumb="Capabilities / Architecture & System Design"
+    title="Architecture & System Design"
+    dek="The structure, data, interfaces, and controls a system needs before it's built."
+    framingParagraphs={[
+      "Early architecture decisions shape cost, reliability, and changeability for years. Structure, data model, infrastructure, and security should be settled before build begins — not discovered after the system is already hard to change.",
+      "This is where those decisions are turned into a technical specification an engineering team — including our own — can build against directly. The people who design the system stay close through delivery, so the implementation matches the design intent."
+    ]}
+    scope={[
+      "Application architecture review and design",
+      "Data architecture and data model design",
+      "API integration and event-stream design",
+      "Cloud infrastructure selection and design — AWS, GCP, Azure",
+      "Security posture and data residency",
+      "Performance and scale design against future load",
+      "Technical debt assessment and migration sequencing",
+      "Technology stack selection and vendor evaluation"
+    ]}
+    engagementFit={{
+      text: "Architecture work usually follows a Technology Advisory & Strategy engagement, once the path forward has been chosen. It can also begin as a Diagnostic when the problem is structural: the system is hard to change, hard to integrate, hard to secure, or expensive to run.",
+      linkLabel: "See how we engage",
+      linkHref: `${base}/#how-we-engage`
+    }}
+    relatedCapability={{
+      label: "Software Engineering — where the design is built, deployed, and operated.",
+      href: `${base}/capabilities/software-engineering`
+    }}
+  />
+</BaseLayout>

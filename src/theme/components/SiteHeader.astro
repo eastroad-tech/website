@@ -1,6 +1,12 @@
 ---
+interface NavItem {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+}
+
 interface Props {
-  navItems: { label: string; href: string }[];
+  navItems: NavItem[];
   ctaLabel: string;
   ctaHref: string;
 }
@@ -18,13 +24,37 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <nav class="nav" aria-label="Primary">
       <ul class="nav__list">
         {
-          navItems.map((link) => (
-            <li>
-              <a class="nav__link" href={link.href}>
-                {link.label}
-              </a>
-            </li>
-          ))
+          navItems.map((item) =>
+            item.children ? (
+              <li class="nav__item nav__item--has-children" data-dropdown>
+                <button
+                  class="nav__link nav__link--trigger"
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  data-dropdown-trigger
+                >
+                  {item.label}
+                  <span class="nav__chevron" aria-hidden="true" />
+                </button>
+                <ul class="nav__dropdown">
+                  {item.children.map((child) => (
+                    <li>
+                      <a class="nav__dropdown-link" href={child.href}>
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li>
+                <a class="nav__link" href={item.href}>
+                  {item.label}
+                </a>
+              </li>
+            )
+          )
         }
       </ul>
 
@@ -45,11 +75,32 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="mobile-menu" id="mobile-menu" hidden data-mobile-menu>
     <ul class="mobile-menu__list">
       {
-        navItems.map((link) => (
-          <li>
-            <a href={link.href}>{link.label}</a>
-          </li>
-        ))
+        navItems.map((item) =>
+          item.children ? (
+            <li class="mobile-menu__item--has-children" data-mobile-accordion>
+              <button
+                class="mobile-menu__accordion-trigger"
+                type="button"
+                aria-expanded="false"
+                data-mobile-accordion-trigger
+              >
+                {item.label}
+                <span class="nav__chevron" aria-hidden="true" />
+              </button>
+              <ul class="mobile-menu__submenu" data-mobile-submenu hidden>
+                {item.children.map((child) => (
+                  <li>
+                    <a href={child.href}>{child.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          )
+        )
       }
     </ul>
     <a class="mobile-menu__cta" href={ctaHref}>{ctaLabel}</a>
@@ -90,6 +141,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .nav__list {
     display: flex;
+    align-items: center;
     gap: 28px;
     list-style: none;
     margin: 0;
@@ -97,12 +149,91 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   .nav__link {
+    font-family: inherit;
     font-size: 15px;
     color: var(--ink);
     text-decoration: none;
   }
 
   .nav__link:hover {
+    color: var(--blue);
+  }
+
+  .nav__link--trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .nav__chevron {
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    margin-top: -2px;
+    transition: transform 0.15s ease;
+  }
+
+  .nav__item--has-children {
+    position: relative;
+    /* Extends the hoverable hit-area down to meet the dropdown with no
+       gap — without this, the mouse crosses a dead zone and the dropdown
+       closes before it's reached. */
+    padding-bottom: 12px;
+    margin-bottom: -12px;
+  }
+
+  .nav__item--has-children:hover .nav__chevron,
+  .nav__item--has-children:focus-within .nav__chevron,
+  .nav__item--has-children[data-open='true'] .nav__chevron {
+    transform: rotate(225deg);
+    margin-top: 2px;
+  }
+
+  .nav__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 8px;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.12s ease;
+    z-index: 20;
+  }
+
+  .nav__item--has-children:hover .nav__dropdown,
+  .nav__item--has-children:focus-within .nav__dropdown,
+  .nav__item--has-children[data-open='true'] .nav__dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav__dropdown-link {
+    display: block;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav__dropdown-link:hover {
+    background: var(--bg);
     color: var(--blue);
   }
 
@@ -184,6 +315,50 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       text-decoration: none;
     }
 
+    .mobile-menu__accordion-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .mobile-menu__accordion-trigger .nav__chevron {
+      transform: rotate(45deg);
+      margin-top: -2px;
+    }
+
+    .mobile-menu__accordion-trigger[aria-expanded='true'] .nav__chevron {
+      transform: rotate(225deg);
+      margin-top: 2px;
+    }
+
+    .mobile-menu__submenu {
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0 0 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-left: 1px solid var(--rule);
+    }
+
+    .mobile-menu__submenu[hidden] {
+      display: none;
+    }
+
+    .mobile-menu__submenu a {
+      font-size: 14px;
+      color: var(--gray);
+      text-decoration: none;
+    }
+
     .mobile-menu__cta {
       display: flex;
       justify-content: center;
@@ -214,4 +389,52 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       toggle.setAttribute('aria-expanded', String(!isOpen));
     });
   }
+
+  // Desktop dropdown: CSS hover/focus-within already handles mouse and
+  // keyboard tabbing. This click-toggle is for touch, where hover doesn't
+  // apply, plus an explicit close on outside click / Escape.
+  const dropdowns = document.querySelectorAll<HTMLElement>('[data-dropdown]');
+
+  dropdowns.forEach((dropdown) => {
+    const trigger = dropdown.querySelector<HTMLButtonElement>('[data-dropdown-trigger]');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', () => {
+      const isOpen = dropdown.dataset.open === 'true';
+      dropdown.dataset.open = String(!isOpen);
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    dropdowns.forEach((dropdown) => {
+      if (!dropdown.contains(event.target as Node)) {
+        dropdown.dataset.open = 'false';
+        dropdown.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    dropdowns.forEach((dropdown) => {
+      dropdown.dataset.open = 'false';
+      dropdown.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Mobile accordion: expand/collapse the capabilities submenu in place.
+  const accordionTriggers = document.querySelectorAll<HTMLButtonElement>('[data-mobile-accordion-trigger]');
+
+  accordionTriggers.forEach((trigger) => {
+    const item = trigger.closest<HTMLElement>('[data-mobile-accordion]');
+    const submenu = item?.querySelector<HTMLElement>('[data-mobile-submenu]');
+    if (!submenu) return;
+
+    trigger.addEventListener('click', () => {
+      const isOpen = !submenu.hidden;
+      submenu.hidden = isOpen;
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
 </script>

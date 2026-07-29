@@ -7,7 +7,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 interface Props {
   title: string;
   description: string;
-  navItems: { label: string; href: string }[];
+  navItems: { label: string; href: string; children?: { label: string; href: string }[] }[];
   ctaLabel: string;
   ctaHref: string;
   positioningLine: string;

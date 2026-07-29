@@ -8,41 +8,93 @@ const { heading, body } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<section class="closing-cta">
+<section id="discuss" class="closing-cta">
+  <div class="closing-cta__bg">
+    <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <path
+        d="M0,420 L160,300 L320,380 L500,260 L700,370 L900,270 L1080,380 L1200,320 L1200,520 L0,520 Z"
+        fill="#1E2A35"
+        opacity="0.55"
+      ></path>
+      <path
+        d="M80,520 L80,400 L280,230 L470,410 L650,250 L850,430 L1020,280 L1200,420 L1200,520 Z"
+        fill="var(--blue-dark)"
+        opacity="0.5"
+      ></path>
+      <path d="M140,520 L260,190 L360,250 L320,520 Z" fill="var(--blue)" opacity="0.65"></path>
+      <path d="M660,520 L820,80 L950,160 L890,520 Z" fill="var(--blue)" opacity="0.65"></path>
+      <path d="M1020,520 L1110,260 L1180,300 L1150,520 Z" fill="var(--blue)" opacity="0.65"></path>
+    </svg>
+  </div>
   <div class="closing-cta__inner">
-    <h2>{heading}</h2>
-    <p>{body}</p>
-    <a class="btn" href={`${base}/contact`}>Start a conversation</a>
+    <div class="closing-cta__content">
+      <p class="closing-cta__eyebrow">Strategy. Architecture. Engineering.</p>
+      <h2>{heading}</h2>
+      <p class="closing-cta__body">{body}</p>
+      <a class="closing-cta__btn" href={`${base}/contact`}>Talk to us</a>
+    </div>
   </div>
 </section>
 
 <style>
   .closing-cta {
-    background: var(--surface);
-    border-top: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .closing-cta__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .closing-cta__bg svg {
+    width: 100%;
+    height: 100%;
   }
 
   .closing-cta__inner {
-    max-width: var(--container-narrow);
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-wide);
     margin-inline: auto;
-    padding: 80px 24px;
-    text-align: center;
+    padding-inline: 24px;
   }
 
-  h2 {
+  .closing-cta__content {
+    max-width: var(--container-narrow);
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .closing-cta__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--text-kicker);
+    letter-spacing: var(--ls-kicker);
+    text-transform: uppercase;
+    color: #5f93b4;
+  }
+
+  .closing-cta h2 {
+    margin-top: 16px;
     font-size: var(--text-h2-section);
     line-height: 1.2;
+    color: #fff;
   }
 
-  p {
+  .closing-cta__body {
     margin-top: 16px;
     font-size: var(--text-support);
     line-height: var(--lh-support);
-    color: var(--gray);
+    color: #c9cdcf;
   }
 
-  .btn {
+  .closing-cta__btn {
     display: inline-flex;
+    align-items: center;
     margin-top: 32px;
     background: var(--blue);
     color: #fff;
@@ -53,7 +105,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     text-decoration: none;
   }
 
-  .btn:hover {
+  .closing-cta__btn:hover {
     background: var(--blue-dark);
   }
 </style>
